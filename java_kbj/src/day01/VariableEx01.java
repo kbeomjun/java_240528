@@ -26,7 +26,7 @@ public class VariableEx01 {
 		double num4 = 3.14;
 		System.out.println(num3+" "+num4 );
 		
-		boolean isEven = true;
+		boolean isEven = false;
 		System.out.println(isEven);
 	}
 

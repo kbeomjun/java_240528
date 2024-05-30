@@ -47,7 +47,7 @@ public class ArithmeticOperatorEx01 {
 		System.out.println(isMinor);
 		
 		//복합 대입 연산자
-		int num3 = 5, num4 = 2; 
+		int num3 = 4, num4 = 2; 
 		num3 += num4;
 		System.out.println(num3);
 		

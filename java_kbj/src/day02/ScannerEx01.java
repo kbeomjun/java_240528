@@ -29,7 +29,6 @@ public class ScannerEx01 {
 		char ch1 = scan.next().charAt(0);
 		System.out.println(ch1);
 		
-		// 예제
 		System.out.print("정수1을 입력하세요 : ");
 		int num3 = scan.nextInt();
 		System.out.print("정수2를 입력하세요 : ");

@@ -72,7 +72,6 @@ public class WhileEx01 {
 			ch = scan.next().charAt(0);
 		}
 		System.out.println("y 입력 완료");
-		
 	}
 
 }

@@ -39,7 +39,6 @@ public class ForEx01 {
 				System.out.print(num+", ");
 			}
 		}
-		
 	}
 
 }

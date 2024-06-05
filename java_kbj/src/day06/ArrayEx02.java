@@ -108,7 +108,7 @@ public class ArrayEx02 {
 		else {
 			System.out.println("Fail");
 		}
-		*/
+		
 		// 문자열을 5개 입력하고 출력하는 예제
 		String [] list = new String[5];
 		for(int i = 0; i < list.length; i ++) {
@@ -118,6 +118,24 @@ public class ArrayEx02 {
 		}
 		for(String tmp : list) {
 			System.out.println(tmp);
+		}
+		*/
+		// 문자열을 입력받아 입력받은 문자열이 배열에 있는지 판별하는 코드
+		String [] list = {"dog","cat","java","cup","can"};
+		System.out.print("찾을 단어 입력 : ");
+		String word = scan.next();
+		boolean result = false;
+		for(int i = 0; i < list.length; i++) {
+			if(word.equals(list[i])) {
+				result = true;
+				break;
+			}
+		}
+		if(result) {
+			System.out.println("단어가 있습니다.");
+		}
+		else {
+			System.out.println("단어가 없습니다.");
 		}
 		
 	}

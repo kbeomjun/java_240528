@@ -86,7 +86,7 @@ public class ArrayEx02 {
 		Integer [] arr2 = {1,3,5,7,9,2,4,6,8,10};
 		Arrays.sort(arr2, Collections.reverseOrder());
 		System.out.println(Arrays.toString(arr2));
-		*/
+		
 		// 과목 4개 점수를 입력받고 과락과 평균에 따라서 합격여부 따지는 예제
 		int [] scores = new int[4];
 		int total = 0;
@@ -108,8 +108,17 @@ public class ArrayEx02 {
 		else {
 			System.out.println("Fail");
 		}
-		
-		
+		*/
+		// 문자열을 5개 입력하고 출력하는 예제
+		String [] list = new String[5];
+		for(int i = 0; i < list.length; i ++) {
+			System.out.print("문자열 입력 : ");
+			list[i] = scan.next();
+			scan.nextLine();
+		}
+		for(String tmp : list) {
+			System.out.println(tmp);
+		}
 		
 	}
 

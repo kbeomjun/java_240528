@@ -10,7 +10,6 @@ public class BaseballGame {
 		 * 스트라이크 : 해당 숫자가 있고, 위치도 같은 경우
 		 * 볼 : 숫자가 있지만 위치가 다른 경우
 		 * 아웃 : 일치하는 숫자가 하나도 없는 경우
-		 * 
 		 */
 		Scanner scan = new Scanner(System.in);
 		
@@ -34,19 +33,21 @@ public class BaseballGame {
 		int strike = 0, ball = 0;
 		do {
 			strike = 0; ball = 0;
+			System.out.println();
 			System.out.print("숫자 입력 : ");
-			
 			for(i = 0; i < answer.length; i++) {
 				answer[i] = scan.nextInt();
-				if(answer[i] == list[i]) {
-					strike++;
-				}
 			}
 			
-			for(i = 0; i < answer.length; i++) {
-				for(int tmp : list) {
-					if(tmp == answer[i]) {
-						ball++;
+			for(i = 0; i < list.length; i++) {
+				for(int j = 0; j < answer.length; j++) {
+					if(list[i] == answer[j]) {
+						if(i == j) {
+							strike++;
+						}
+						else {
+							ball++;
+						}
 					}
 				}
 			}
@@ -55,17 +56,13 @@ public class BaseballGame {
 				System.out.println("3S 정답입니다.");
 				break;
 			}
-			
-			if(strike > 0 && (ball-strike) == 0) {
-				System.out.println(strike+"S");
+			if(strike != 0) {
+				System.out.print(strike+"S ");
 			}
-			else if(strike == 0 && (ball-strike) > 0) {
-				System.out.println((ball-strike)+"B");
+			if(ball != 0) {
+				System.out.print(ball+"B ");
 			}
-			else if(strike > 0 && (ball-strike) > 0) {
-				System.out.println(strike+"S "+(ball-strike)+"B");
-			}
-			else {
+			if(strike == 0 && ball == 0) {
 				System.out.println("OUT");
 			}
 			

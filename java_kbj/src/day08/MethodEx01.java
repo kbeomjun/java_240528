@@ -1,9 +1,13 @@
 package day08;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class MethodEx01 {
 	
 	public static void main(String[] args) {
-		
+		Scanner scan = new Scanner(System.in);
+		/*
 		// 주어진 숫자가 소수인지 아닌지 판별하는 코드
 		int num = 4;
 		boolean isPrime = isPrime(num);
@@ -35,7 +39,44 @@ public class MethodEx01 {
 		int [] arr = new int[] {1,2,3,4,5};
 		int num3 = 6;
 		System.out.println(contains(arr, num3));
+		*/
+		// 크기를 입력받고 최소값과 최대값이 주어졌을 때, 중복되지 않은 랜덤한 배열을 생성하는 코드
+		System.out.print("배열 크기 입력 : ");
+		int size = scan.nextInt();
+		int min = 1, max = 9;
+		int [] randomArr = randomArray(size, min, max);
+		System.out.println(Arrays.toString(randomArr));
 		
+	}
+	
+	// 크기를 입력받고 최소값과 최대값이 주어졌을 때, 중복되지 않은 랜덤한 배열을 생성하는 메서드
+	public static int[] randomArray(int size, int min, int max) {
+		if(size < 0) {
+			return null;
+		}
+		if (min > max) {
+			int tmp = min;
+			min = max;
+			max = tmp;
+		}
+		if(size > max - min + 1) {
+			return null;
+		}
+		int[] arr = new int[size];
+		int count = 0, i = 0;
+		while (count < size){
+			int random = (int)(Math.random() * (max - min + 1) + min);
+			for(i = 0; i < count; i++) {
+				if(arr[i] == random) {
+					break;
+				}
+			}
+			if (i == count) {
+				arr[count] = random;
+				count++;
+			}
+		}
+		return arr;
 	}
 	
 	// 주어진 배열에 원하는 정수가 있는지 확인하는 메서드

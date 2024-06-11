@@ -7,69 +7,22 @@ public class StudentEx01 {
 	/* 학생 성적을 관리하기 위한 프로그램 : 국어, 영어, 수학 */
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		
-		int menu = 0, grade = 0, classNum = 0, num = 0, studentCount = 0, mismatch = 0;
-		String name = null;
-		int kor = 0, eng = 0, math = 0;
+	 	
+		int menu = 0, studentCount = 0;
 		Student [] list = new Student[3];
 		
 		do {
 			printMenu();
 			menu = scan.nextInt();
-			//runMenu(menu);
 			switch(menu) {
 			case 1:
-				if(studentCount == list.length) {
-					System.out.println("다 찼습니다.");
-					break;
-				}
-				System.out.print("학년 반 번호 이름 : ");
-				grade = scan.nextInt();
-				classNum = scan.nextInt();
-				num = scan.nextInt();
-				name = scan.next();
-				list[studentCount++] = new Student(grade, classNum, num, name);
+				studentCount = insertStudent(list, scan, studentCount);
 				break;
 			case 2:
-				System.out.print("학년 반 번호 : ");
-				grade = scan.nextInt();
-				classNum = scan.nextInt();
-				num = scan.nextInt();
-				mismatch = 0;
-				for(int i = 0; i < list.length; i++) {
-					if(list[i].getGrade() == grade && list[i].getClassNum() == classNum && list[i].getNum() == num) {
-						System.out.print("국영수 성적 입력 : ");
-						kor = scan.nextInt();
-						eng = scan.nextInt();
-						math = scan.nextInt();
-						list[i].updateScore(kor, eng, math);
-					}
-					else {
-						mismatch++;
-					}
-				}
-				if(mismatch == list.length) {
-					System.out.println("일치하는 학생이 없습니다.");
-				}
+				updateStudent(list, scan, studentCount);
 				break;
 			case 3:
-				System.out.print("학년 반 번호 : ");
-				grade = scan.nextInt();
-				classNum = scan.nextInt();
-				num = scan.nextInt();
-				mismatch = 0;
-				for(int i = 0; i < list.length; i++) {
-					if(list[i].getGrade() == grade && list[i].getClassNum() == classNum && list[i].getNum() == num) {
-						list[i].print();
-						list[i].printScore();
-					}
-					else {
-						mismatch++;
-					}
-				}
-				if(mismatch == list.length) {
-					System.out.println("일치하는 학생이 없습니다.");
-				}
+				printStudent(list, scan, studentCount);
 				break;
 			case 4:
 				System.out.println("프로그램 종료입니다.");
@@ -89,23 +42,72 @@ public class StudentEx01 {
 		System.out.print("메뉴 선택 : ");
 	}
 	
-	public static void runMenu(int menu) {
-		switch(menu) {
-		case 1:
-			System.out.println("학생 등록입니다.");
-			break;
-		case 2:
-			System.out.println("성적 수정입니다.");
-			break;
-		case 3:
-			System.out.println("성적 확인입니다.");
-			break;
-		case 4:
-			System.out.println("프로그램 종료입니다.");
-			break;
-		default:
-			System.out.println("잘못된 메뉴입니다.");
+	public static int indexOf(Student[] list, int studentCount, Student std) {
+		if(list == null || std == null) {
+			return -1;
 		}
+		for(int i = 0; i < studentCount; i++) {
+			if(std.getGrade() != list[i].getGrade()) {
+				continue;
+			}
+			if(std.getClassNum() != list[i].getClassNum()) {
+				continue;
+			}
+			if(std.getNum() != list[i].getNum()) {
+				continue;
+			}
+			return i;
+		}
+		return -1;
+	}
+	
+	public static Student inputStudent(Scanner scan) {
+		System.out.print("학년 반 번호 : ");
+		int grade = scan.nextInt();
+		int classNum = scan.nextInt();
+		int num = scan.nextInt();
+		return new Student(grade, classNum, num, "");
+	}
+	
+	public static int insertStudent(Student[] list, Scanner scan, int studentCount) {
+		if(studentCount == list.length) {
+			System.out.println("다 찼습니다.");
+			return studentCount;
+		}
+		Student tmp = inputStudent(scan);
+		String name = scan.next();
+		tmp.setName(name);
+		int index = indexOf(list, studentCount, tmp);
+		if(index != -1) {
+			System.out.println("이미 등록된 학생입니다.");
+			return studentCount;
+		}
+		list[studentCount++] = tmp;
+		return studentCount;
+	}
+	
+	public static void updateStudent(Student[] list, Scanner scan, int studentCount) {
+		Student tmp = inputStudent(scan);
+		int index = indexOf(list, studentCount, tmp);
+		if(index == -1) {
+			System.out.println("일치하는 학생이 없습니다.");
+			return;
+		}
+		System.out.print("국어 영어 수학 성적 : ");
+		int kor = scan.nextInt();
+		int eng = scan.nextInt();
+		int math = scan.nextInt();
+		list[index].updateScore(kor, eng, math);
+	}
+	
+	public static void printStudent(Student[] list, Scanner scan, int studentCount) {
+		Student tmp = inputStudent(scan);
+		int index = indexOf(list, studentCount, tmp);
+		if(index == -1) {
+			System.out.println("일치하는 학생이 없습니다.");
+			return;
+		}
+		list[index].print();
 	}
 
 }
@@ -132,10 +134,7 @@ class Student{
 	
 	public void print() {
 		System.out.println(grade+"학년 "+classNum+"반 "+num+"번 "+name);
-	}
-	
-	public void printScore() {
-		System.out.println("국어 : "+kor+", 영어 : "+eng+", 수학 : "+math);
+		System.out.println("국어 : "+kor+"점, 영어 : "+eng+"점, 수학 : "+math+"점");
 	}
 	
 	public int getGrade() {return grade;}

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class StudentEx01 {
 	
-	/* 학생 성적을 관리하기 위한 프로그램 : 국어, 영어, 수학 */
+	// 학생 성적을 관리하기 위한 프로그램 : 국어, 영어, 수학
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
 	 	

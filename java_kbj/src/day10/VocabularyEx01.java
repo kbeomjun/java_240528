@@ -21,9 +21,6 @@ public class VocabularyEx01 {
 				if(wordCount == list.length) {
 					list = expandWordList(list, list.length + 2);
 				}
-				for(int i = 0; i < wordCount; i++) {
-					list[i].print();
-				}
 				break;
 			case 2:
 				index = findWord(list, wordCount);
@@ -31,9 +28,6 @@ public class VocabularyEx01 {
 					break;
 				}
 				list = modifyWord(list, wordCount, index);
-				for(int i = 0; i < wordCount; i++) {
-					list[i].print();
-				}
 				break;
 			case 3:
 				index = findWord(list, wordCount);
@@ -49,9 +43,6 @@ public class VocabularyEx01 {
 				}
 				list = deleteWord(list, wordCount, index);
 				wordCount--;
-				for(int i = 0; i < wordCount; i++) {
-					list[i].print();
-				}
 				break;
 			case 5:
 				System.out.println("프로그램을 종료합니다.");
@@ -97,6 +88,16 @@ public class VocabularyEx01 {
 	
 	public static int insertWord(Word[] list, int wordCount) {
 		Word tmp = inputWord();
+		for(int i = 0; i < wordCount; i++) {
+			if(list[i].getWord().equals(tmp.getWord())) {
+				if(list[i].getWordClass().equals(tmp.getWordClass())) {
+					if(list[i].getMeaning().equals(tmp.getMeaning())) {
+						System.out.println("중복된 단어입니다.");
+						return wordCount;
+					}
+				}
+			}
+		}
 		list[wordCount++] = tmp;
 		sortWord(list, wordCount);
 		System.out.println("단어 등록을 완료했습니다.");

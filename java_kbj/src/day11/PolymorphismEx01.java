@@ -20,13 +20,11 @@ class Appliances{
 	boolean power;
 	String name = "가전제품";
 }
-
 class TV extends Appliances{
 	public TV() {
 		name = "TV";
 	}
 }
-
 class Airconditioner extends Appliances{
 	public Airconditioner() {
 		name = "에어컨";

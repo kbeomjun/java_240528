@@ -6,7 +6,7 @@ import java.util.StringTokenizer;
 public class StringEx01 {
 
 	public static void main(String[] args) {
-		/* String 예제 */
+		/* String 클래스 */
 		// char charAt(index)
 		String str = "Hello world";
 		System.out.println(str+"의 3번째 문자 : "+str.charAt(2));

@@ -77,5 +77,20 @@ public class StringEx01 {
 			String token = st.nextToken(); // 토큰을 가져옴
 			System.out.println(token);
 		}
+		
+		/* 다음과 같이 책 제목들이 있을 때 원하는 단어를 검색해서 해당 단어가 있는 책을 출력하는 코드 
+		 * 일치하는 책이 없는 경우 일치하는 책이 없습니다. 라고 출력 */
+		String [] books = {"자바의 정석", "혼자하는 자바", "혼자하는 C", "수학의 정석", "누구나 하는 C"};
+		String word = "자바";
+		int count = 0;
+		for(int i = 0; i < books.length; i++) {
+			if(books[i].contains(word)) {
+				System.out.println(books[i]);
+				count++;
+			}
+		}
+		if(count == 0) {
+			System.out.println("일치하는 책이 없습니다.");
+		}
 	}
 }

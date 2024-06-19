@@ -6,6 +6,8 @@ import java.util.Scanner;
 
 public class ListEx01 {
 
+	public static Scanner scan = new Scanner(System.in);
+	
 	public static void main(String[] args) {
 		/* 리스트 기본 예제 - 순서 O, 중복 O */
 		ArrayList<String> list = new ArrayList<String>();
@@ -16,6 +18,10 @@ public class ListEx01 {
 		list.add("Hello");
 		list.add(0, "Hi");
 		list.add("홍길동");
+		System.out.println(list);
+		
+		/* set(번지, 객체) : 번지에 객체를 수정 */
+		list.set(0, "Bye");
 		System.out.println(list);
 		
 		/* remove(객체) : 리스트에서 주어진 객체와 일치하는 객체를 제거, 컬렉션 인터페이스에서 구현 
@@ -56,7 +62,6 @@ public class ListEx01 {
 		System.out.println();
 		
 		/* 전화번호를 5번 입력받아 리스트에 저장, 삭제하는 코드 */
-		Scanner scan = new Scanner(System.in);
 		ArrayList<String> list1 = new ArrayList<String>();
 		for(int i = 0; i < 5; i++) {
 			System.out.print("전화번호 입력 : ");

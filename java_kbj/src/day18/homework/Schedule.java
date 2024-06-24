@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Schedule implements Serializable {
+public class Schedule implements Serializable, Comparable<Schedule> {
 	private static final long serialVersionUID = -5064040074128226529L;
 	private String date;
 	private String hour;
@@ -16,5 +16,12 @@ public class Schedule implements Serializable {
 	@Override
 	public String toString() {
 		return date+" "+hour+" "+schedule+" "+detail;
+	}
+	@Override
+	public int compareTo(Schedule o) {
+		if(date.equals(o.date)) {
+			return hour.compareTo(o.hour);
+		}
+		return date.compareTo(o.date);
 	}
 }

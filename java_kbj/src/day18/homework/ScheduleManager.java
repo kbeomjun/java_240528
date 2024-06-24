@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -75,6 +76,7 @@ public class ScheduleManager implements Program {
 			}
 		}
 		list.add(new Schedule(date, hour, schedule, detail));
+		Collections.sort(list);
 		System.out.println("일정을 추가했습니다.");
 		System.out.println("---------------------------------");
 	}
@@ -139,6 +141,7 @@ public class ScheduleManager implements Program {
 			}
 		}
 		list.set(index, new Schedule(date, hour, schedule, detail));
+		Collections.sort(list);
 		System.out.println("일정을 수정했습니다.");
 		System.out.println("---------------------------------");
 	}

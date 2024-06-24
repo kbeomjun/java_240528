@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -156,7 +157,7 @@ public class Manager implements Program {
 				String detail = scan.next();
 				System.out.println("---------------------------------");
 				String regexDate = "^[2][0][2][4-9]-[01]\\d-[0-3]\\d$";
-				String regexHour = "^[12]\\d:[0-5]\\d$";
+				String regexHour = "^[0-2]\\d:[0-5]\\d$";
 				if(!Pattern.matches(regexDate, date)) {
 					System.out.println("잘못된 날짜입니다.");
 					return;
@@ -172,6 +173,7 @@ public class Manager implements Program {
 					}
 				}
 				slist.add(new Schedule(date, hour, schedule, detail));
+				Collections.sort(slist);
 				System.out.println("일정을 추가했습니다.");
 				System.out.println("---------------------------------");
 				break;
@@ -225,7 +227,7 @@ public class Manager implements Program {
 					System.out.println("잘못된 날짜입니다.");
 					return;
 				}
-				regexHour = "^[12]\\d:[0-5]\\d$";
+				regexHour = "^[0-2]\\d:[0-5]\\d$";
 				if(!Pattern.matches(regexHour, hour)) {
 					System.out.println("잘못된 시간입니다.");
 					return;
@@ -237,6 +239,7 @@ public class Manager implements Program {
 					}
 				}
 				slist.set(index, new Schedule(date, hour, schedule, detail));
+				Collections.sort(slist);
 				System.out.println("일정을 수정했습니다.");
 				System.out.println("---------------------------------");
 				break;

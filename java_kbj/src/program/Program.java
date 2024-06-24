@@ -8,12 +8,8 @@ public interface Program {
 
 	void run() throws Exception;
 	
-	default void save(String fileName) {
-		System.out.println("저장 기능을 구현할 예정");
-	}
+	void save(String fileName);
 	
-	default void load(String fileName) {
-		System.out.println("불러오기 기능을 구현할 예정");
-	}
+	void load(String fileName);
 	
 }

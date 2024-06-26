@@ -6,7 +6,7 @@ public interface Program {
 	
 	void runMenu(int menu) throws Exception;
 
-	void run() throws Exception;
+	void run();
 	
 	void save(String fileName);
 	

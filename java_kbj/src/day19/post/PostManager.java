@@ -182,7 +182,7 @@ public class PostManager implements Program {
 		list.remove(index);
 	}
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		String filename = "src/day19/post/post.txt";
 		load(filename);
 		//
@@ -190,7 +190,11 @@ public class PostManager implements Program {
 		do {
 			printMenu();
 			menu = scan.nextInt();
-			runMenu(menu);
+			try {
+				runMenu(menu);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}while(menu != 5);
 		save(filename);
 	}

@@ -203,10 +203,10 @@ public class PostManager implements Program {
 		try(FileOutputStream fos = new FileOutputStream(filename);
 			ObjectOutputStream oos = new ObjectOutputStream(fos)){
 			oos.writeObject(list);
-			} catch (IOException e) {
-				System.out.println("입출력 예외 발생");
-				e.printStackTrace();
-			}
+		} catch (IOException e) {
+			System.out.println("입출력 예외 발생");
+			e.printStackTrace();
+		}
 	}
 	@SuppressWarnings("unchecked")
 	@Override

@@ -179,7 +179,7 @@ public class PhoneManager implements Program {
 		return -1;
 	}
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		String fileName = null;
 		load(fileName);
 		int menu = EXIT + 1;

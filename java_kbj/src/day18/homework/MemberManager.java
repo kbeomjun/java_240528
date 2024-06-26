@@ -101,7 +101,7 @@ public class MemberManager implements Program {
 		System.out.println("---------------------------------");
 	}
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		String fileName = "src/day18/homework/member.txt";
 		//load(fileName);
 		//list = new ArrayList<Member>();
@@ -109,7 +109,11 @@ public class MemberManager implements Program {
 		do {
 			printMenu();
 			menu = scan.nextInt();
-			runMenu(menu);
+			try {
+				runMenu(menu);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}while(menu != EXIT);
 		save(fileName);
 	}

@@ -226,7 +226,7 @@ public class ScheduleManager implements Program {
 		}
 	}
 	@Override
-	public void run() throws Exception {
+	public void run() {
 		String filename = "src/day18/homework/schedule.txt";
 		//load(filename);
 		//list = new ArrayList<Schedule>();
@@ -234,7 +234,11 @@ public class ScheduleManager implements Program {
 		do {
 			printMenu();
 			menu = scan.nextInt();
-			runMenu(menu);
+			try {
+				runMenu(menu);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}while(menu != EXIT);
 		save(filename);
 	}

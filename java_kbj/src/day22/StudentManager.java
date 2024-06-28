@@ -91,7 +91,34 @@ public class StudentManager implements Program {
 				+ "메뉴 선택 : ");
 	}
 	private void runStudentUpdateMenu(int menu) {
-		
+		switch(menu) {
+		case 1:
+			Student std = inputStudent();
+			int index = -1;
+			index = list.indexOf(std);
+			if(index == -1) {
+				System.out.println("일치하는 학생이 없습니다.");
+				return;
+			}
+			std = inputStudent();
+			std = inputStudentExpand();
+			if(list.contains(std)) {
+				System.out.println("이미 등록된 학생입니다.");
+				return;
+			}
+			list.set(index, std);
+			System.out.println("학생 정보를 수정하였습니다.");
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		default:
+		}
 	}
 	private void studentDelete() {
 		Student std = inputStudent();
@@ -159,7 +186,21 @@ public class StudentManager implements Program {
 				+ "메뉴 선택 : ");
 	}
 	private void runSubjectMenu(int menu2) {
-		
+		switch(menu2) {
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			System.out.println("프로그램 종료");
+			break;
+		default:
+			System.out.println("잘못된 메뉴");
+		}
 	}
 	@Override
 	public void run() {

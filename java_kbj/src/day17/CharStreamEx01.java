@@ -20,8 +20,9 @@ public class CharStreamEx01 {
 			System.out.println("파일 입출력에서 예외가 발생했습니다.");
 		}
 		
+		/* 파일을 이어 쓰려면 뒤에 true를 추가 */
 		String fileName2 = "src/day17/charStream.txt";
-		try(FileWriter fw = new FileWriter(fileName2)){
+		try(FileWriter fw = new FileWriter(fileName2, true)){
 			String str = "안녕하세요. 제 이름은 홍길동입니다.\n만나서 반갑습니다.";
 			fw.write(str);
 		} catch (IOException e) {

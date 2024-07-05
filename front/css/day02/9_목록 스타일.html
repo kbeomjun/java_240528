@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>목록 스타일</title>
+	<style>
+		/* 
+		list-style-type
+			- 마커의 종류를 선택
+			- ul
+				- disc(기본값), circle, sqaure, none
+			- ol
+				- decimal(기본값), decimal-leading-zero
+					lower-roman/upper-roman
+					lower-alpha/upper-alpha
+					lower-latin/upper-latin
+		list-style-image
+			- 마커를 이미지로 대체
+			- url 함수를 이용해서 이미지를 가져옴
+		list-style-position
+			- 마커의 위치를 조절
+			- inside li태그 안쪽, outside li태그 바깥쪽(기본값)
+		list-style
+			- list-style-type list-style-position list-style-image를
+				한 번에 적용하는 단축 속성
+			- list-style : none으로 마커를 제거
+		*/
+		.list1{
+			list-style-type: square;
+			/* list-style-image: url(https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQgByBT5IiAT_a2x9pUVb4VMoOrlzHH7Jrzj-HB5jzHlR4lNLMS); */
+			list-style-position: outside;
+			list-style: square outside;
+		}
+		.list2{
+			list-style-type:lower-roman;
+			list-style-position: inside;
+		}
+		li{background-color: yellow;}
+	</style>
+</head>
+<body>
+	<ul class="list1">
+		<li class="item">1</li>
+		<li class="item">2</li>
+		<li class="item">3</li>
+	</ul>
+	<ol class="list2">
+		<li class="item">1</li>
+		<li class="item">2</li>
+		<li class="item">3</li>
+	</ol>
+</body>
+</html>

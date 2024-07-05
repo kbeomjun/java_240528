@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>구조 선택자</title>
+	<style>
+		/* 
+		일반 구조 선택자
+			- 요소 종류 상관없이 형제 요소들 중 몇번째 요소인지를 선택하는 선택자
+		:first-child
+			- 첫번째 형제 요소
+		:last-child
+			- 마지막 형제 요소
+		:nth-child(숫자)
+			- 앞에서 숫자번째 요소
+		:nth-last-child(숫자)
+			- 뒤에서 숫자번째 요소
+		:nth-child(2n)
+			- 짝수번째 요소
+		*/
+		.box1>:first-child{
+			/* background-color: yellow; */
+		}
+		.box1>:last-child{
+			/* background-color: yellow; */
+		}
+		.box1>:nth-child(2n-1){
+			/* background-color: yellow; */
+		}
+		.box1>:nth-last-child(2n){
+			/* background-color: yellow; */
+		}
+
+		/* 
+		형태 구조 선택자
+			- 선택자(태그선택자만)와 일치하는 형제 요소들 중 몇번째 요소인지를 선택하는 선택자
+		:first-of-type
+			- 선택자와 일치하는 형제 요소들 중 첫번째 형제 요소
+		:last-of-type
+			- 선택자와 일치하는 형제 요소들 중 마지막 형제 요소
+		:nth-of-type(숫자)
+			- 선택자와 일치하는 형제 요소들 중 앞에서 숫자번째 요소
+		:nth-last-of-type(숫자)
+			- 선택자와 일치하는 형제 요소들 중 뒤에서 숫자번째 요소
+		:nth-of-type(2n)
+			- 선택자와 일치하는 형제 요소들 중 짝수번째 요소
+		*/
+		.box1>div:first-of-type{
+			/* background-color: yellow; */
+		}
+		/* box1의 자식 요소들 중에서 모든 태그의 마지막 요소들을 선택 */
+		.box1>:last-of-type{
+			/* background-color: yellow; */
+		}
+		/* box1의 자식 요소들 중에서 p 태그의 마지막 요소를 선택 */
+		.box1>p:last-of-type{
+			/* background-color: yellow; */
+		}
+		.box1>div:nth-of-type(2n-1){
+			/* background-color: yellow; */
+		}
+		.box1>:nth-last-of-type(1){
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+	<div class="box1">
+		<p>안녕하세요. p태그입니다.</p>
+		<div>안녕하세요. div입니다.</div>
+		<div>안녕하세요. div입니다.</div>
+		<p>안녕하세요. p태그입니다.</p>
+		<ul>
+			<li>1</li>
+			<li>2</li>
+		</ul>
+	</div>
+</body>
+</html>

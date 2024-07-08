@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>분할 예제</title>
+	<style>
+		.container1{
+			border: 5px solid black;
+		}
+		.container1::after{
+			clear: both; display: block; content: '';
+		}
+		.box1{
+			width: 50%; height: 500px;
+			border: 5px solid red; box-sizing: border-box;
+			float: left;
+		}
+		.container1 :last-child{
+			border-color: skyblue;
+		}
+
+		.container2{
+			border: 5px solid black;
+		}
+		.container2::after{
+			clear: both; display: block; content: '';
+		}
+		.box2{
+			width: calc(50% - 5px); height: 500px;
+			border: 5px solid red; box-sizing: border-box;
+			float: left;
+		}
+		.container2 :last-child{
+			border-color: skyblue; float: right;
+		}
+
+		.container3{
+			border: 5px solid black;
+		}
+		.container3::after{
+			clear: both; display: block; content: '';
+		}
+		.box3{
+			width: calc((100% - 20px) / 3); height: 500px;
+			border: 5px solid red; box-sizing: border-box;
+			float: left;
+		}
+		.container3 :nth-child(2){
+			border-color: skyblue; margin-left: 10px;
+		}
+		.container3 :last-child{
+			border-color: yellowgreen; float: right;
+		}
+
+		.container4{
+			border: 5px solid black; height: 500px;
+		}
+		.container4::after{
+			clear: both; display: block; content: '';
+		}
+		.box4{
+			width: calc((100% - 30px) / 2); height: calc(100% - 20px);
+			border: 5px solid red; box-sizing: border-box;
+			float: left;
+			margin-top: 10px; margin-left: 10px;
+		}
+		.container4 :last-child{
+			border-color: yellowgreen;
+		}
+
+		.container5{
+			border: 5px solid black;
+		}
+		.container5::after{
+			clear: both; display: block; content: '';
+		}
+		.box5{
+			width: calc((100% - 30px) / 2);
+			border: 5px solid red; box-sizing: border-box;
+			float: left;
+			margin-top: 10px; margin-left: 10px; margin-bottom: 10px;
+		}
+		.container5>:last-child{
+			border-color: yellowgreen;
+		}
+		.inner-box1{
+			width: 100%; height: 300px;
+			border: 5px solid blue; box-sizing: border-box;
+		}
+		.inner-box2{
+			width: 100%; height: 100px;
+			border: 5px solid blueviolet; box-sizing: border-box;
+			margin-top: 10px;	
+		}
+	</style>
+</head>
+<body>
+	<div class="container1">
+		<div class="box1"></div>
+		<div class="box1"></div>
+	</div> <hr>
+	<div class="container2">
+		<div class="box2"></div>
+		<div class="box2"></div>
+	</div> <hr>
+	<div class="container3">
+		<div class="box3"></div>
+		<div class="box3"></div>
+		<div class="box3"></div>
+	</div> <hr>
+	<div class="container4">
+		<div class="box4"></div>
+		<div class="box4"></div>
+	</div> <hr>
+	<div class="container5">
+		<div class="box5">
+			<div class="inner-box1"></div>
+			<div class="inner-box2"></div>
+		</div>
+		<div class="box5">
+			<div class="inner-box1"></div>
+			<div class="inner-box2"></div>
+		</div>
+	</div> <hr>
+</body>
+</html>

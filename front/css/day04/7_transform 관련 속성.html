@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>transform 관련 속성</title>
+	<style>
+		.box{
+			width: 200px; height: 100px; margin-bottom: 100px;
+			border: 3px solid black;
+		}
+		.container{perspective: 1000px;}
+		/* 
+		transform-origin
+			- transform 속성을 이용해서 요소를 변형시킬 때 기준점을 설정
+		*/
+		.scaleX{
+			transform: scaleX(2); transform-origin: 0 0;
+		}
+		.rotateX{
+			transition: transform 1s; transform-origin: 0 0;
+		}
+		.rotateX:hover{
+			transform: rotateX(360deg);
+		}
+		/* 
+		transform-style
+			- 여러 가지 변형을 동시에 하는 경우 부모 요소에 적용한 3d변형을 하위 요소에 적용하는 속성
+			- flat : 하위 요소를 평면으로 처리
+			- preserve-3d : 하위 요소들에 3d효과 적용
+		*/
+		.container-style1, .container-style2{
+			display: inline-block; border: 10px solid #f00;
+			transform: perspective(500px) rotateY(-60deg);
+			transition: transform 10s;
+		}
+		.inner-box{
+			width: 100px; height: 100px;
+			background-color: yellow;
+			transform: perspective(500px) rotateY(60deg);
+		}
+		.container-style2{transform-style: preserve-3d;}
+		/* 
+		backface-visibility
+			- 요소의 뒷면을 보일지 안보일지를 결정하는 속성
+			- hidden : 안보임
+			- visible : 보임(기본값)
+		*/
+		.box1, .box2{
+			width: 200px; height: 200px; border: 3px solid black; margin-top: 50px;
+			display: inline-block;
+			background-image: url(https://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg);
+			background-size: contain; background-repeat: no-repeat; background-position: center;
+			transform: rotateY(180deg);
+		}
+		.box2{backface-visibility: hidden;}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box"></div>
+		<div class="box scaleX"></div>
+		<div class="box rotateX"></div>
+		<div class="style">
+			<div class="container-style1">
+				<div class="inner-box"></div>
+			</div>
+			<div class="container-style2">
+				<div class="inner-box"></div>
+			</div>
+		</div>
+		<div class="backface">
+			<div class="box1"></div>
+			<div class="box2"></div>
+		</div>
+	</div>
+</body>
+</html>

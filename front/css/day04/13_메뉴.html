@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>메뉴 예제</title>
+	<style>
+		.menu{
+			height: 100px; border: 5px solid black;
+		}
+		.box{
+			display: inline-block; float: left;
+			width: calc((100% - 10px) / 3); height: 100px; border-right: 5px solid black;
+			text-align: center; 
+		}
+		.third{
+			border: none;
+		}
+		.link{
+			text-decoration: none; line-height: 100px; 
+			font-size: 20px; font-weight: bold; color: black;
+		}
+		.link:hover, .box:hover{
+			background-color: yellow; color: skyblue;
+		}
+		.menu::after{
+			clear: both; content: ''; display: block;
+		}
+
+		*{padding: 0; margin: 0; color: black;}
+		.menu-list{list-style: none;}
+		.menu-item{
+			float: left; width: calc(100% / 3);
+		}
+		.menu-link{
+			text-decoration: none; display: block; border: 3px solid black;
+			line-height: 50px; text-align: center; font-weight: bold; font-size: 20px;
+		}
+		.menu-item~.menu-item .menu-link{
+			border-left: none;
+		}
+		.menu-item:hover{
+			background-color: yellow;
+		}
+		.menu-list::after{
+			clear: both; content: ''; display: block;
+		}
+		.body{
+			height: 100px; background-color: gray;
+		}
+	</style>
+</head>
+<body>
+	<div class="menu">
+		<div class="box first">
+			<a href="" class="link">메뉴1</a>
+		</div>
+		<div class="box second">
+			<a href="" class="link">메뉴2</a>
+		</div>
+		<div class="box third">
+			<a href="" class="link">메뉴3</a>
+		</div>
+	</div>
+	<br><br><br><br><br><br><br>
+	<nav>
+		<ul class="menu-list">
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴1</a>
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴2</a>
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴3</a>
+			</li>
+		</ul>
+	</nav>
+	<div class="body"></div>
+</body>
+</html>

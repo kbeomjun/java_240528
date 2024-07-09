@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>transform:rotate</title>
+	<style>
+		.box{
+			width: 200px; height: 100px; margin-bottom: 100px;
+			border: 3px solid black;
+			background-image: url(https://image.dongascience.com/Photo/2022/06/6982fdc1054c503af88bdefeeb7c8fa8.jpg);
+			background-size: contain; background-repeat: no-repeat; background-position: center;
+		}
+		/*
+		rotate?()
+			- 요소를 회전시키는 함수
+			- 회전하기 때문에 요소의 모양이 바뀌지는 않음
+		*/
+		.r1{transform: rotateX(60deg);}
+		.r2{transform: rotateY(60deg);}
+		.r3{transform: rotate(60deg);}
+		.r4{transform: rotateZ(60deg);}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box"></div>
+		<div class="box r1"></div>
+		<div class="box r2"></div>
+		<div class="box r3"></div>
+		<div class="box r4"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>타이머</title>
+	<style>
+		.btn-start{
+			position: absolute; top : 10px; left: 10px;
+			width: 50px; height: 50px; cursor: pointer;
+			border: 1px solid black; border-radius: 50%; background-color: white;
+		}
+		.btn-stop{
+			position: absolute; top : 70px; left: 10px;
+			width: 50px; height: 50px; cursor: pointer;
+			border: 1px solid black; border-radius: 50%; background-color: white;
+		}
+	</style>
+</head>
+<body>
+	<button class="btn-start" type="button" onclick="startTime();">START</button>
+	<button class="btn-stop" type="button" onclick="clearTime();">STOP</button>
+	<script>
+		/* 1초마다 시간을 콘솔에 출력하는 코드를 작성
+		00 : 00
+		*/
+		var sec = 0, min = 0;
+		
+		function getTime(min, sec){
+			var secStr = String(sec).padStart(2,'0');
+			var minStr = String(min).padStart(2,'0');
+			return `${minStr} : ${secStr}<br>`;
+		}
+
+		var id;
+		function startTime(){
+			id = setInterval(()=>{
+				console.log(getTime(min, sec));
+				sec++;
+				if(sec == 60){
+					min++;
+					sec = 0;
+				}
+			}, 1000);
+		}
+		function clearTime(){
+			if(id){
+				clearInterval(id);
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>todolist 예제</title>
+</head>
+<body>
+	<h1>오늘의 할 일 등록</h1>
+	<input type="text" id="input" autofocus placeholder="할 일">
+	<button id="btn" type="reset">등록</button>
+	<hr>
+	<h1>오늘의 할 일</h1>
+	<ol id="list"></ol>
+	<script>
+		const input = document.getElementById("input");
+		const btn = document.getElementById("btn");
+		const list = document.getElementById("list");
+
+		btn.addEventListener('click', function(){
+			var inputValue = input.value;
+			if(inputValue == ""){
+				alert("할 일을 입력하세요.");
+			}else{
+				var text = `<li>${inputValue}</li><br>`;
+				list.innerHTML += text;
+				input.value = "";
+			}
+		});
+	</script>
+</body>
+</html>

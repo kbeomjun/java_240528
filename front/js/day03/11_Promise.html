@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Promise</title>
+</head>
+<body>
+	<script>
+		var count = 0;
+
+		let promise = new Promise((resolve, reject)=>{
+			if(count < 3){
+				resolve();
+			}else{
+				reject();
+			}
+		})
+
+		promise
+			.then(()=>document.write('작업 완료<br>'))
+			.catch(()=>document.write('예외 발생<br>'))
+			.finally(()=>document.write('종료<br>'))
+
+		function test(){
+			return new Promise((resolve, reject)=>{
+				setTimeout(()=>{
+					++count;
+					if(count < 3){
+						resolve();
+					}else{
+						reject();
+					}
+				},1000);
+			})
+		}
+		count = 0;
+		test()
+			.then(()=>{
+				document.write(`작업 완료${count}<br>`)
+				return test();
+			})
+			.then(()=>{
+				document.write(`작업 완료${count}<br>`)
+				return test();
+			})
+			// 여기서 count가 3이 되어 reject()가 실행되고 catch가 동작함
+			.then(()=>{
+				document.write(`작업 완료${count}<br>`)
+				return test();
+			})
+			.then(()=>{
+				document.write(`작업 완료${count}<br>`)
+				return test();
+			})
+			.catch(()=>document.write(`예외 발생${count}<br>`))
+	</script>
+</body>
+</html>

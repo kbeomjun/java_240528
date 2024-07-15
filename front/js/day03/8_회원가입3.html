@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원가입3</title>
+</head>
+<body>
+	<!-- 
+	아이디, 비번, 비번 확인을 입력해서 회원 가입을 진행하는 코드
+		- 아이디는 영어로만, 비번은 영어, 숫자만 사용가능
+		- 비번 확인은 비번과 같아야 함
+	-->
+	<style>
+		*{margin: 0px;}
+		.container{
+			border: 5px solid chartreuse; padding: 20px; box-sizing: border-box;
+			width: 500px;  border-radius: 10px; position: relative; top: 50px; left: 100px;
+		}
+		.box{
+			margin-bottom: 20px;
+		}
+		#id{margin-top: 20px;}
+		#id, #pw, #pw-check, #btn{
+			background-color: transparent; border: 3px solid chartreuse; box-sizing: border-box;
+			border-radius: 10px;
+			width: 100%; height: 30px; font-size: 15px; line-height: 24px;
+		}
+		#btn{
+			border: greenyellow; background-color: greenyellow; font-weight: bold;
+			color: black;
+		}
+		.error{color: red;}
+	</style>
+	<div class="container">
+		<h2>회원가입</h2>
+		<form action="" id="form">
+			<div class="box">
+				<input type="text" id="id" autofocus placeholder="아이디">
+			</div>
+			<div class="box">
+				<input type="password" id="pw" autofocus placeholder="비밀번호">
+			</div>
+			<div class="box">
+				<input type="password" id="pw-check" autofocus placeholder="비밀번호 확인">
+			</div>
+			<div class="box">
+				<button type="submit" id="btn">회원가입</button>
+			</div>
+		</form>
+	</div>
+	<script>
+		const id = document.getElementById("id");
+		const pw = document.getElementById("pw");
+		const pwCheck = document.getElementById("pw-check");
+		const form = document.getElementById("form");
+
+		let regexId = /^[a-zA-Z]{6,12}$/;
+		let regexPw = /^\w{6,12}$/;
+
+		id.addEventListener("input", function(){
+			removeSpan(id);
+			if(!checkId(regexId, id)){
+				appendSpan(id, "아이디는 영문 6~12자입니다.");
+			}
+		});
+
+		pw.addEventListener("input", function(){
+			removeSpan(pw);
+			if(!checkPw(regexPw, pw)){
+				appendSpan(pw, "비밀번호는 영문, 숫자 6~12자입니다.");
+			}
+		});
+
+		pwCheck.addEventListener("input", function(){
+			removeSpan(pwCheck);
+			if(!checkPw2(pw, pwCheck)){
+				appendSpan(pwCheck, "비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			}
+		});
+
+		form.addEventListener("submit", function(e){
+			var flag = false;
+			
+			removeSpan(id);
+			removeSpan(pw);
+			removeSpan(pwCheck);
+			
+			if(!checkId(regexId, id)){
+				appendSpan(id, "아이디는 영문 6~12자입니다.");
+				flag = true;
+			}
+			if(!checkPw(regexPw, pw)){
+				appendSpan(pw, "비밀번호는 영문, 숫자 6~12자입니다.");
+				flag = true;
+			}
+			if(!checkPw2(pw, pwCheck)){
+				appendSpan(pwCheck, "비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+				flag = true;
+			}
+			if(flag){
+				e.preventDefault();
+			}
+		});
+		function checkId(regexId, id){
+			return regexId.test(id.value);
+		}
+		function checkPw(regexPw, pw){
+			return regexPw.test(pw.value);
+		}
+		function checkPw2(pw, pwCheck){
+			return pw.value == pwCheck.value;
+		}
+		function appendSpan(element, str){
+			var span = document.createElement("span");
+			var textNode = document.createTextNode(str);
+			var classAttr = document.createAttribute('class');
+			classAttr.value = "error";
+			span.append(textNode);
+			span.setAttributeNode(classAttr);
+			element.after(span);
+		}
+		function removeSpan(element){
+			var span = element.nextElementSibling;
+			if(span){
+				span.remove();
+			}
+		}
+	</script>
+</body>
+</html>

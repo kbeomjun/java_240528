@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>주소</title>
+	<script src="../../static/jquery.min.js"></script>
+</head>
+<body>
+	<label for="">주소</label> <br>
+	<input type="text" name="address"> <br>
+	<label for="">상세주소</label> <br>
+	<input type="text" name="detail">
+	<button id="btn">등록</button> <br>
+	<label for="">주소전체</label> <br>
+	<input type="text" name="all" readonly> <br>
+	<script>
+		$('#btn').click(function(){
+			var address = $('[name=address]').val();
+			var detail = $('[name=detail]').val();
+			var all = `${address}(${detail})`;
+			$('[name=all]').val(all);
+		});
+		
+	</script>
+</body>
+</html>

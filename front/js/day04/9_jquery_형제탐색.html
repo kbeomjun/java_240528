@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>형제탐색</title>
+	<script src="../../static/jquery.min.js"></script>
+	<style>
+		body *:not(script) {
+			padding: 10px; border: 5px solid black;
+			display: block;
+		}
+		.center{background-color: yellow;}
+	</style>
+</head>
+<body>
+	<nav>
+		<ul class="menu-list">
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴1</a>
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴2</a>
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴3</a>
+			</li>
+			<li class="menu-item center">
+				<a href="#" class="menu-link">메뉴4</a>
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴5</a>
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴6</a>
+			</li>
+			<li class="menu-item">
+				<a href="#" class="menu-link">메뉴7</a>
+			</li>
+		</ul>
+	</nav>
+	<script>
+		/*
+		요소.prev()
+			- 이전 형제 요소를 선택
+		요소.next()
+			- 다음 형제 요소를 선택
+		요소.prevAll()
+			- 이전 형제 요소들을 모두 선택
+		요소.prevAll('선택자')
+			- 이전 형제 요소 중 선택자와 일치하는 요소를 선택
+		요소.nextAll()
+			- 다음 형제 요소들을 모두 선택
+		요소.nextAll('선택자')
+			- 다음 형제 요소 중 선택자와 일치하는 요소를 선택
+		요소.prevUntil('선택자')
+			- 이전 형제 요소부터 선택자 형제 요소 전까지의 요소들을 모두 선택
+		요소.nextUntil('선택자')
+			- 다음 형제 요소부터 선택자 형제 요소 전까지의 요소들을 모두 선택
+		요소.siblings()
+			- 모든 형제 요소를 선택
+		요소.siblings('선택자')
+			- 형제 요소 중 선택자와 일치하는 요소를 선택
+		*/
+		$('.center').prev().css('background-color', 'gray');
+		$('.center').next().css('background-color', 'green');
+		$('.center').prevAll(':first-child').css('border-color', 'red');
+		$('.center').nextAll().css('border-color', 'skyblue');
+		$('.center').prevUntil(':first-child')
+			.children().css('color', 'yellowgreen');
+		$('.center').nextUntil(':last-child')
+			.children().css('color', 'orange');
+		$('.center').siblings().css('border-radius', '20px');
+	</script>
+</body>
+</html>

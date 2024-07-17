@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>페이지 이동</title>
+	<script src="../../static/jquery.min.js"></script>
+	<style>
+		.pageination{
+			display: flex; justify-content: center;
+			margin-top: 10px;
+		}
+		.box-page{margin: 0 10px;}
+		.box{height: 300px; display: none; border: 1px solid black;}
+		.block{display: block;}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box box1 block">1</div>
+		<div class="box box2">2</div>
+		<div class="box box3">3</div>
+	</div>
+	<div class="pageination">
+		<button class="btn-prev"><</button>
+		<span class="box-page">
+			<span class="current-page">1</span>
+			/
+			<span>3</span>
+		</span>
+		<button class="btn-next">></button>
+	</div>
+	<script>
+		$('.btn-prev').click(function(){
+			var currentPage = $('.current-page').text();
+			currentPage--;
+			if(currentPage == 0){
+				currentPage = 3;
+			}
+			displayBox(currentPage);
+		});
+
+		$('.btn-next').click(function(){
+			var currentPage = $('.current-page').text();
+			currentPage++;
+			if(currentPage == 4){
+				currentPage = 1;
+			}
+			displayBox(currentPage);
+		});
+
+		function displayBox(currentPage){
+			$('.current-page').text(currentPage);
+			$('.box').hide();
+			$('.box').eq(currentPage - 1).show();
+		}
+	</script>
+</body>
+</html>

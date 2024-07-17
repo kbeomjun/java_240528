@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>타이머</title>
+	<script src="../../static/jquery.min.js"></script>
+	<style>
+		.box-timer{
+			border: 2px solid black; padding: 30px;
+			font-size: 30px; text-align: center; width: 500px;
+			margin: 0 auto; box-sizing: border-box;
+		}
+		.box-btns{
+			margin: 10px auto; width: 500px;
+		}
+		.box-btns::after{
+			clear: both; display: block; content: '';
+		}
+		.btn{
+			width: 45%; float: left; border: 2px solid black; height: 30px;
+		}
+		.btn-stop{
+			float: right;
+		}
+	</style>
+</head>
+<body>
+	<div class="box-timer">
+		00:00:00
+	</div>
+	<div class="box-btns">
+		<button class="btn btn-start">시작</button>
+		<button class="btn btn-stop">중지</button>
+	</div>
+	<script>
+		var h = 0;
+		var m = 0;
+		var s = 0;
+		var interval;
+		$('.btn-start').click(function(){
+			interval = setInterval(()=>{
+				var hour = h;
+				var min = m;
+				var sec = s;
+				if(h < 10){
+					hour = "0" + h;
+				}
+				if(m < 10){
+					min = "0" + m;
+				}
+				if(s < 10){
+					sec = "0" + s;
+				}
+				var time = `${hour}:${min}:${sec}`;
+				$('.box-timer').text(time);
+				s++;
+				if(s == 60){
+					m++;
+					s = 0;
+				}
+				if(m == 60){
+					h++;
+					m = 0;
+				}
+			}, 100);
+		});
+		$('.btn-stop').click(function(){
+			clearInterval(interval);
+		});
+	</script>
+</body>
+</html>

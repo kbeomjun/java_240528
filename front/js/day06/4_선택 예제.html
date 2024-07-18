@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>선택 예제</title>
+	<script src="../../static/jquery.min.js"></script>
+	<style>
+		.box{
+			width: 150px; height: 50px; border: 3px solid black;
+			line-height: 50px; font-size: 30px; font-weight: bold;
+			text-align: center;
+		}
+		.box-list{
+			display: flex; justify-content: space-evenly;
+		}
+		.box-check-list{
+			text-align: center; margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="box-list">
+			<div class="box"></div>
+			<div class="box"></div>
+			<div class="box"></div>
+		</div>
+		<div class="box-check-list">
+			<label>
+				<input type="checkbox" name="sports" value="야구"> 야구
+			</label>
+			<label>
+				<input type="checkbox" name="sports" value="농구"> 농구
+			</label>
+			<label>
+				<input type="checkbox" name="sports" value="축구"> 축구
+			</label>
+			<label>
+				<input type="checkbox" name="sports" value="배구"> 배구
+			</label>
+			<label>
+				<input type="checkbox" name="sports" value="골프"> 골프
+			</label>
+		</div>
+	</div>
+	<script>
+		var list = [];
+		$('[name=sports]').change(function(){
+			var check = $(this).prop('checked');
+			var value = $(this).val();
+			if(check){
+				if(list.length == 3){
+					$(this).prop('checked', false);
+					alert('최대 3개까지 선택 가능합니다.');
+					return;
+				}
+				list.push(value);
+			}else{
+				var index = list.indexOf(value);
+				list.splice(index, 1);
+			}
+			display(list);
+		});
+		function display(list){
+			$('.box').text('');
+			for(var i = 0; i < list.length; i++){
+				$('.box').eq(i).text(list[i]);
+			}
+		}
+	</script>
+</body>
+</html>

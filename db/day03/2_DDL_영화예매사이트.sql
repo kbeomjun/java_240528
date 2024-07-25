@@ -246,3 +246,6 @@ ALTER TABLE `ticketing` ADD CONSTRAINT `FK_member_TO_ticketing_1` FOREIGN KEY (
 REFERENCES `member` (
 	`me_id`
 );
+
+ALTER TABLE `cgv`.`schedule` 
+ADD COLUMN `sd_possible` INT NOT NULL AFTER `sd_mo_num`;

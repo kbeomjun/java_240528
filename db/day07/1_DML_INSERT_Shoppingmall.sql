@@ -25,3 +25,28 @@ insert into product values
 # 분류 : 악세서리, 코드 : ACC001, 상품명 : 금 목걸이, 가격 : 100000, 내용 : 부의 상징.
 insert into product values
 ('ACC001', '금 목걸이', '그늘을 만들어줘요.', 100000, (select ca_num from category where ca_name = '악세서리'));
+
+# abc123회원이 CLO001 제품을 장바구니에 3개 담았을 때 쿼리
+insert into basket(ba_pr_code, ba_me_id, ba_amount) values('CLO001', 'abc123', 3);
+# abc123회원이 CLO001 제품을 장바구니에 2개 담았을 때 쿼리
+update basket set ba_amount = 2 where ba_pr_code = 'CLO001' and ba_me_id = 'abc123';
+
+# abc123회원이 ACC001 제품을 장바구니에 1개 담았을 때 쿼리
+insert into basket(ba_pr_code, ba_me_id, ba_amount) values('ACC001', 'abc123', 1);
+# abc123회원이 장바구니에 있는 모든 제품을 구매했을 때 필요한 모든 쿼리
+insert into buy(bu_pr_code, bu_me_id, bu_amount, bu_state) values
+('CLO001', 'abc123', 2, '구매'), ('ACC001', 'abc123', 1, '구매');
+delete from basket where ba_me_id = 'abc123';
+
+# abc123회원이 id : abc123, pw : abc1234로 로그인 시도했을 때 실행해야하는 쿼리
+update member set me_fail = me_fail + 1 where me_id = 'abc123';
+
+# abc123회원이 로그인 시도가 성공했을 때 실행해야하는 쿼리
+update member set me_fail = 0 where me_id = 'abc123';
+
+# abc123회원이 비번 찾기를 시도해서 인증코드가 123asd가 발급됐을때 실행해야하는 쿼리
+insert into code values('abc123', '123asd', date_add(now(), interval 5 minute));
+
+# abc123회원이 인증코드를 입력해서 비번을 abc1234로 수정했을 때 실행해야하는 쿼리
+update member set me_pw = 'abc1234' where me_id = 'abc123';
+delete from code where co_me_id = 'abc123';

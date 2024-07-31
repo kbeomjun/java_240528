@@ -1,4 +1,4 @@
-package db.day02.ex01.main;
+package db.day02.main;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import db.day02.ex01.dao.StudentDAO;
-import db.day02.ex01.vo.StudentVO;
+import db.day02.dao.StudentDAO;
+import db.day02.vo.StudentVO;
 
 public class DBEx01 {
 

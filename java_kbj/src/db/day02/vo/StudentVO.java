@@ -1,4 +1,4 @@
-package db.day02.ex01.vo;
+package db.day02.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

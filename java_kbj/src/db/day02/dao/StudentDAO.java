@@ -1,10 +1,10 @@
-package db.day02.ex01.dao;
+package db.day02.dao;
 
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
-import db.day02.ex01.vo.StudentVO;
+import db.day02.vo.StudentVO;
 
 public interface StudentDAO {
 

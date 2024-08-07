@@ -1,0 +1,9 @@
+*.class
+.classpath
+.project
+.settings/
+
+java_kbj/.gitignore
+
+MANIFEST.MF
+/build/

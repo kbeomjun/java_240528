@@ -53,7 +53,7 @@ INSERT INTO POST(PO_TITLE, PO_CONTENT, PO_ME_ID, PO_CO_NUM)
 VALUES('대한민국 선수들 화이팅!', '화이팅!', 'qwe123', 5);
 
 # qwe123회원이 1번 게시글을 클릭해서 상세를 확인했을 때 쿼리 => 조회수를 증가하는 쿼리 
-UPDATE POST SET PO_VIEW = PO_VIEW + 1 WHERE PO_NUM = 1;
+UPDATE POST SET PO_VIEWs = PO_VIEWs + 1 WHERE PO_NUM = 1;
 # 1번 게시글에 qwe123회원이 추천을 눌렀을 때 쿼리 => 추천을 추가
 INSERT INTO RECOMMEND(RE_STATE, RE_PO_NUM, RE_ME_ID) VALUES(1, 1, 'qwe123');
 

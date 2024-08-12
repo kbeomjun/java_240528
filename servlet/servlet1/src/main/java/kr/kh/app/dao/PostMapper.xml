@@ -13,11 +13,62 @@
 	
 	<select id="selectPostList" resultType="PostVO">
 		select * from post where po_co_num = #{cri.co_num} 
+		<if test="cri.type == 'all'">
+		and (po_title like concat('%', #{cri.search}, '%') or po_me_id = #{cri.search})
+		</if>
+		<if test="cri.type == 'title'">
+		and po_title like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 'id'">
+		and po_me_id = #{cri.search}
+		</if>
 		order by po_num desc 
 		limit #{cri.pageStart}, #{cri.perPageNum};
 	</select>
 	
 	<select id="selectPostTotalCount" resultType="int">
-		select count(*) from post where po_co_num = #{cri.co_num};
+		select count(*) from post where po_co_num = #{cri.co_num} 
+		<if test="cri.type == 'all'">
+		and (po_title like concat('%', #{cri.search}, '%') or po_me_id = #{cri.search})
+		</if>
+		<if test="cri.type == 'title'">
+		and po_title like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 'id'">
+		and po_me_id = #{cri.search}
+		</if>
 	</select>
+	
+	<insert id="insertPost">
+		insert into post(po_co_num, po_title, po_content, po_me_id) 
+		values(#{post.po_co_num}, #{post.po_title}, #{post.po_content}, #{post.po_me_id})
+	</insert>
+	
+	<select id="selectPost" resultType="PostVO">
+		select * from post where po_num = #{po_num}
+	</select>
+	
+	<update id="updatePostView">
+		update post set po_views = po_views + 1 where po_num = #{po_num};
+	</update>
+	
+	<update id="updatePost">
+		update post set po_title = #{post.po_title}, po_content = #{post.po_content} where po_num = #{post.po_num};
+	</update>
+	
+	<delete id="deletePostFile">
+		delete from post_file where pf_po_num = #{post.po_num};
+	</delete>
+	
+	<delete id="deletePostRecommend">
+		delete from recommend where re_po_num = #{post.po_num};
+	</delete>
+	
+	<delete id="deletePostComment">
+		delete from comment where cm_po_num = #{post.po_num};
+	</delete>
+
+	<delete id="deletePost">
+		delete from post where po_num = #{post.po_num};
+	</delete>
 </mapper>

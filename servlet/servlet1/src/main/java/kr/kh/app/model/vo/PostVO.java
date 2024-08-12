@@ -1,5 +1,7 @@
 package kr.kh.app.model.vo;
 
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +13,20 @@ public class PostVO {
 	private String po_content;
 	private String po_me_id;
 	private int po_co_num;
-	private String po_date;
+	private Date po_date;
 	private int po_views; 
 	private int po_report;
+	
+	public PostVO(int co_num, String title, String content, String id) {
+		this.po_co_num = co_num;
+		this.po_title = title;
+		this.po_content = content;
+		this.po_me_id = id;
+	}
+
+	public PostVO(int po_num, String title, String content) {
+		this.po_num = po_num;
+		this.po_title = title;
+		this.po_content = content;
+	}
 }

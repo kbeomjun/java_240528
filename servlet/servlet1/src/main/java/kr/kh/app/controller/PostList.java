@@ -32,13 +32,16 @@ public class PostList extends HttpServlet {
 				page = Integer.parseInt(pageStr);
 			}
 			
+			String type = request.getParameter("type");
+			String search = request.getParameter("search");
+			
 			CommunityVO community = postService.getCommunity(coNum);
 			if(community == null) {
 				throw new Exception();
 			}
 			
-			Criteria cri = new PostCriteria(page, 2, "", coNum);
-			PageMaker pm = postService.getPageMaker(cri, 2);
+			Criteria cri = new PostCriteria(page, 5, search, coNum, type);
+			PageMaker pm = postService.getPageMaker(cri, 5);
 			
 			List<PostVO> list = postService.getPostList(cri);
 

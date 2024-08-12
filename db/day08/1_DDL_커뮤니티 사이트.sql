@@ -36,7 +36,7 @@ CREATE TABLE `post` (
 	`po_me_id`	varchar(13)		NOT NULL,
 	`po_co_num`	int				NOT NULL,
 	`po_date`	datetime		NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`po_view`	int				NOT NULL DEFAULT 0,
+	`po_views`	int				NOT NULL DEFAULT 0,
 	`po_report`	int				NOT NULL DEFAULT 0
 );
 

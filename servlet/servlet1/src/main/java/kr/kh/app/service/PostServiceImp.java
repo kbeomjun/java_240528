@@ -132,9 +132,6 @@ public class PostServiceImp implements PostService {
 
 	@Override
 	public void deletePost(PostVO post) {
-		postDao.deletePostFile(post);
-		postDao.deletePostRecommend(post);
-		postDao.deletePostComment(post);
 		postDao.deletePost(post);
 	}
 }

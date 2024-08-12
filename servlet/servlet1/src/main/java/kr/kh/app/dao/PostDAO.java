@@ -25,12 +25,6 @@ public interface PostDAO {
 	void updatePostView(@Param("po_num")int po_num);
 
 	boolean updatePost(@Param("post")PostVO post);
-
-	void deletePostFile(@Param("post")PostVO post);
-
-	void deletePostRecommend(@Param("post")PostVO post);
-
-	void deletePostComment(@Param("post")PostVO post);
-
+	
 	void deletePost(@Param("post")PostVO post);
 }

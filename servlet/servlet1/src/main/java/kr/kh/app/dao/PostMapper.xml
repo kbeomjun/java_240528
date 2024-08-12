@@ -56,18 +56,6 @@
 		update post set po_title = #{post.po_title}, po_content = #{post.po_content} where po_num = #{post.po_num};
 	</update>
 	
-	<delete id="deletePostFile">
-		delete from post_file where pf_po_num = #{post.po_num};
-	</delete>
-	
-	<delete id="deletePostRecommend">
-		delete from recommend where re_po_num = #{post.po_num};
-	</delete>
-	
-	<delete id="deletePostComment">
-		delete from comment where cm_po_num = #{post.po_num};
-	</delete>
-
 	<delete id="deletePost">
 		delete from post where po_num = #{post.po_num};
 	</delete>

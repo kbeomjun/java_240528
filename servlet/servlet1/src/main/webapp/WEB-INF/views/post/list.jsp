@@ -24,7 +24,7 @@
 		  </div>
 		  <input type="text" class="form-control" placeholder="검색어를 입력하세요." name="search" value="${pm.cri.search}">
 		  <div class="input-group-append">
-		    <button class="btn btn-primary" type="submit">검색</button>
+		    <button class="btn btn-outline-primary" type="submit">검색</button>
 		  </div>
 		  <input type="hidden" name="co_num" value="${pm.cri.co_num}">
 		</form>
@@ -50,7 +50,12 @@
 						<td>
 							<fmt:formatDate value="${post.po_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</td>
-						<td>0</td>
+						<td>
+							<c:choose>
+								<c:when test="${post.po_up eq 0 && post.po_down eq 0}">0</c:when>
+								<c:otherwise>${post.po_up}/<c:if test="${post.po_down > 0}">-</c:if>${post.po_down}</c:otherwise>
+							</c:choose>
+						</td>
 						<td>${post.po_views}</td>
 					</tr>
 				</c:forEach>

@@ -10,9 +10,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.kh.app.dao.PostDAO;
+import kr.kh.app.model.vo.CommentVO;
 import kr.kh.app.model.vo.CommunityVO;
 import kr.kh.app.model.vo.MemberVO;
 import kr.kh.app.model.vo.PostVO;
+import kr.kh.app.model.vo.RecommendVO;
 import kr.kh.app.pagination.Criteria;
 import kr.kh.app.pagination.PageMaker;
 
@@ -133,5 +135,52 @@ public class PostServiceImp implements PostService {
 	@Override
 	public void deletePost(PostVO post) {
 		postDao.deletePost(post);
+	}
+
+	@Override
+	public int insertRecommend(RecommendVO recommend) {
+		if(recommend == null) {
+			throw new RuntimeException();
+		}
+		RecommendVO dbRecommend = postDao.selectRecommend(recommend);
+		if(dbRecommend != null) {
+			if(dbRecommend.getRe_state() != recommend.getRe_state()) {
+				postDao.deleteRecommend(dbRecommend.getRe_num());
+				postDao.insertRecommend(recommend);
+				return 1;
+			}else {
+				postDao.deleteRecommend(dbRecommend.getRe_num());
+				return 0;
+			}
+		}else {
+			postDao.insertRecommend(recommend);
+			return 1;
+		}
+	}
+
+	@Override
+	public RecommendVO getRecommend(int po_num, MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		RecommendVO recommend = new RecommendVO(po_num, 0, user.getMe_id());
+		return postDao.selectRecommend(recommend);
+	}
+
+	@Override
+	public List<CommentVO> getCommentList(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		return postDao.selectCommentList(cri);
+	}
+
+	@Override
+	public PageMaker getCommentPageMaker(Criteria cri) {
+		if(cri == null) {
+			return null;
+		}
+		int totalCount =  postDao.selectCommentTotalCount(cri);
+		return new PageMaker(totalCount, 2, cri);
 	}
 }

@@ -12,7 +12,9 @@
 	</select>
 	
 	<select id="selectPostList" resultType="PostVO">
-		select * from post where po_co_num = #{cri.co_num} 
+		select post.*, count(if(re_state=1, re_state, null)) po_up, count(if(re_state=-1, re_state, null)) po_down
+		from post left join recommend on po_num = re_po_num
+		where po_co_num = #{cri.co_num}
 		<if test="cri.type == 'all'">
 		and (po_title like concat('%', #{cri.search}, '%') or po_me_id = #{cri.search})
 		</if>
@@ -22,6 +24,7 @@
 		<if test="cri.type == 'id'">
 		and po_me_id = #{cri.search}
 		</if>
+		group by po_num 
 		order by po_num desc 
 		limit #{cri.pageStart}, #{cri.perPageNum};
 	</select>
@@ -45,7 +48,10 @@
 	</insert>
 	
 	<select id="selectPost" resultType="PostVO">
-		select * from post where po_num = #{po_num}
+		select post.*, count(if(re_state=1, re_state, null)) po_up, count(if(re_state=-1, re_state, null)) po_down
+		from post left join recommend on po_num = re_po_num
+		where po_num = #{po_num} 
+		group by po_num;
 	</select>
 	
 	<update id="updatePostView">
@@ -59,4 +65,26 @@
 	<delete id="deletePost">
 		delete from post where po_num = #{post.po_num};
 	</delete>
+	
+	<select id="selectRecommend" resultType="RecommendVO">
+		select * from recommend where re_po_num = #{re.re_po_num} and re_me_id = #{re.re_me_id};
+	</select>
+	
+	<delete id="deleteRecommend">
+		delete from recommend where re_num = #{re_num};
+	</delete>
+	
+	<insert id="insertRecommend">
+		insert into recommend(re_po_num, re_me_id, re_state)
+		values(#{re.re_po_num}, #{re.re_me_id}, #{re.re_state});
+	</insert>
+	
+	<select id="selectCommentList" resultType="CommentVO">
+		select * from comment where cm_po_num = #{cri.po_num} 
+		order by cm_ori_num desc, cm_num asc limit #{cri.pageStart}, #{cri.perPageNum};
+	</select>
+	
+	<select id="selectCommentTotalCount" resultType="int">
+		select count(*) from comment where cm_po_num = #{cri.po_num};
+	</select>
 </mapper>

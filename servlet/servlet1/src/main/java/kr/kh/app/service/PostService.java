@@ -2,9 +2,11 @@ package kr.kh.app.service;
 
 import java.util.List;
 
+import kr.kh.app.model.vo.CommentVO;
 import kr.kh.app.model.vo.CommunityVO;
 import kr.kh.app.model.vo.MemberVO;
 import kr.kh.app.model.vo.PostVO;
+import kr.kh.app.model.vo.RecommendVO;
 import kr.kh.app.pagination.Criteria;
 import kr.kh.app.pagination.PageMaker;
 
@@ -28,4 +30,12 @@ public interface PostService {
 	boolean updatePost(PostVO post, MemberVO user);
 
 	void deletePost(PostVO post);
+
+	int insertRecommend(RecommendVO recommend);
+
+	RecommendVO getRecommend(int po_num, MemberVO user);
+
+	List<CommentVO> getCommentList(Criteria cri);
+
+	PageMaker getCommentPageMaker(Criteria cri);
 }

@@ -51,6 +51,11 @@
 			<label for="content">내용:</label>
 			<div class="form-control" style="min-height: 400px; overflow: scroll;">${post.po_content}</div>
 		</div>
+		<a href="<c:url value="/post/list?co_num=${post.po_co_num}"/>" class="btn btn-outline-primary">목록</a>
+		<c:if test="${user ne null && post.po_me_id == user.me_id}">
+			<a href="<c:url value="/post/update?po_num=${post.po_num}"/>" class="btn btn-outline-warning">수정</a>
+			<a href="<c:url value="/post/delete?po_num=${post.po_num}"/>" class="btn btn-outline-danger">삭제</a>
+		</c:if>
 		<hr>
 		<div>
 			<h3>댓글 목록</h3>
@@ -65,16 +70,11 @@
 				</li>
 			</ul>
 			<div class="comment-pagination"></div>
-			<div class="comment-insert-box input-group mb-3">
+			<div class="comment-insert-box mb-3">
 				<textarea class="col-12 input-comment-insert"></textarea>
-				<button class="btn btn-outline-success btn-comment-insert">등록</button>
+				<button class="btn btn-outline-success mt-3 btn-comment-insert">등록</button>
 			</div>
 		</div>
-		<a href="<c:url value="/post/list?co_num=${post.po_co_num}"/>" class="btn btn-outline-primary">목록</a>
-		<c:if test="${user ne null && post.po_me_id == user.me_id}">
-			<a href="<c:url value="/post/update?po_num=${post.po_num}"/>" class="btn btn-outline-warning">수정</a>
-			<a href="<c:url value="/post/delete?po_num=${post.po_num}"/>" class="btn btn-outline-danger">삭제</a>
-		</c:if>
 	</div>
 	
 	<script type="text/javascript">
@@ -320,9 +320,9 @@
 			let cm_num = $(this).data('cm_num');
 			let cm_content = $(this).parent().next().text();
 			var str = `
-				<div class="comment-update-box input-group mb-3">
+				<div class="comment-update-box mb-3">
 					<textarea class="col-12 input-comment-update">\${cm_content}</textarea>
-					<button class="btn btn-outline-warning btn-comment-update-complete" data-cm_num="\${cm_num}">수정 완료</button>
+					<button class="btn btn-outline-warning mt-3 btn-comment-update-complete" data-cm_num="\${cm_num}">수정 완료</button>
 				</div>
 			`;
 			$('.comment-insert-box').after(str);

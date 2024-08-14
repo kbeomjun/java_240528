@@ -183,4 +183,49 @@ public class PostServiceImp implements PostService {
 		int totalCount =  postDao.selectCommentTotalCount(cri);
 		return new PageMaker(totalCount, 2, cri);
 	}
+
+	@Override
+	public boolean insertComment(CommentVO comment) {
+		if(comment == null) {
+			return false;
+		}
+		if(comment.getCm_content() == null || comment.getCm_content().trim().length() == 0) {
+			return false;
+		}
+		return postDao.insertComment(comment);
+	}
+
+	@Override
+	public boolean deleteComment(int cm_num, int cm_ori_num, MemberVO user) {
+		if(user == null) {
+			return false;
+		}
+		CommentVO comment = postDao.selectComment(cm_num);
+		if(comment == null) {
+			return false;
+		}
+		if(!comment.getCm_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		if(cm_num == cm_ori_num) {
+			return postDao.deleteAllComment(cm_num);
+		}else {
+			return postDao.deleteComment(cm_num);
+		}
+	}
+
+	@Override
+	public boolean updateComment(CommentVO comment, MemberVO user) {
+		if(user == null || comment == null) {
+			return false;
+		}
+		CommentVO dbComment = postDao.selectComment(comment.getCm_num());
+		if(dbComment == null) {
+			return false;
+		}
+		if(!dbComment.getCm_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		return postDao.updateComment(comment);
+	}
 }

@@ -9,6 +9,17 @@
 <meta charset="UTF-8">
 <title>게시글 상세</title>
 	<jsp:include page="/WEB-INF/views/common/head.jsp"></jsp:include>
+	<style type="text/css">
+		.comment-list{
+			list-style: none; padding: 0;
+		}
+		.comment-list>.comment-item{
+			margin-bottom: 20px;
+		}
+		.comment-list>.comment-item.reply{
+			padding-left: 50px;
+		}
+	</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
@@ -40,8 +51,24 @@
 			<label for="content">내용:</label>
 			<div class="form-control" style="min-height: 400px; overflow: scroll;">${post.po_content}</div>
 		</div>
+		<hr>
 		<div>
-			<ul class="comment-list"></ul>
+			<h3>댓글 목록</h3>
+			<ul class="comment-list">
+				<li class="comment-item">
+					<div>작성자 아이디(시간)</div>
+					<div>댓글 내용</div>
+				</li>
+				<li class="comment-item reply">
+					<div>작성자 아이디(시간)</div>
+					<div>대댓글 내용</div>
+				</li>
+			</ul>
+			<div class="comment-pagination"></div>
+			<div class="comment-insert-box input-group mb-3">
+				<textarea class="col-12 input-comment-insert"></textarea>
+				<button class="btn btn-outline-success btn-comment-insert">등록</button>
+			</div>
 		</div>
 		<a href="<c:url value="/post/list?co_num=${post.po_co_num}"/>" class="btn btn-outline-primary">목록</a>
 		<c:if test="${user ne null && post.po_me_id == user.me_id}">
@@ -56,16 +83,13 @@
 			page : 1
 		}
 		
+		getCommentList(cri);
+		
 		$('.btn-up, .btn-down').click(function(e){
 			e.preventDefault();
 			
-			if('${user.me_id}' == ''){
-				if(confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')){
-					location.href = '<c:url value="/login"/>';
-					return;
-				}else{
-					return;
-				}
+			if(!checkLogin()){
+				return;
 			}
 			
 			let re_state = $(this).data('re_state');
@@ -110,7 +134,14 @@
 			}
 		}
 		
-		getCommentList(cri);
+		$(document).on('click', ".pagination .page-item", function(){
+			if($(this).hasClass('disabled')){
+				return;
+			}
+			let page = $(this).data('page');
+			cri.page = page;
+			getCommentList(cri);
+		});
 		function getCommentList(cri){
 			$.ajax({
 				url : '<c:url value="/comment/list"/>',
@@ -129,7 +160,34 @@
 			});
 		}
 		function displayPagination(pm){
-			console.log(pm);
+			if(pm.totalCount == 0){
+				return;
+			}
+			
+			str = `<ul class="pagination justify-content-center">`;
+			
+			var disabled = pm.prev ? '' : 'disabled';
+			str +=				
+			    `<li class="page-item \${disabled}" data-page="\${pm.startPage - 1}">
+			    	<a class="page-link" href="javascript:void(0);">이전</a>
+		    	</li>`;
+			
+	    	for(var i = pm.startPage; i <= pm.endPage; i++){
+	    		var active = pm.cri.page == i ? 'active' : '';
+				str +=
+				    `<li class="page-item \${active}" data-page="\${i}">
+				    	<a class="page-link" href="javascript:void(0);">\${i}</a>
+			    	</li>`;
+			}
+			
+	    	var disabled = pm.next ? '' : 'disabled';
+			str +=
+			    `<li class="page-item \${disabled}" data-page="\${pm.endPage + 1}">
+			    	<a class="page-link" href="javascript:void(0);">다음</a>
+		    	</li>`;
+			
+	    	str += `</ul>`;
+			$('.comment-pagination').html(str);
 		}
 		function displayCommentList(list){
 			var str = '';
@@ -139,11 +197,168 @@
 				return;
 			}
 			
-			for(co of list){
-				str += `<li>\${co.cm_content}</li>`;
+			for(cm of list){
+				var btns = '';
+				if(cm.cm_me_id == '${user.me_id}'){
+					btns += `<a href="javascript:void(0);" class="btn-comment-delete text-danger" 
+								data-cm_num="\${cm.cm_num}" data-cm_ori_num="\${cm.cm_ori_num}">X</a> `;
+					btns += `<a href="javascript:void(0);" class="btn-comment-update text-info" 
+								data-cm_num="\${cm.cm_num}">수정</a>`;
+				}
+				
+				if(cm.cm_num == cm.cm_ori_num){
+					str += `
+						<li class="comment-item">
+							<div>
+								<span>\${cm.cm_me_id}(\${cm.cm_date})</span>
+								\${btns}
+							</div>
+							<div>\${cm.cm_content}</div>
+						</li>
+					`;
+				}
+				else{
+					str += `
+						<li class="comment-item reply">
+							<div>
+								<span>\${cm.cm_me_id}(\${cm.cm_date})</span>
+								\${btns}
+							</div>
+							<div>\${cm.cm_content}</div>
+						</li>
+					`;
+				}
 			}
 			$('.comment-list').html(str);
 		}
+		
+		$('.btn-comment-insert').click(function(){
+			if(!checkLogin()){
+				return;
+			}
+			
+			let cm_content = $('.input-comment-insert').val();
+			let cm_ori_num = 0;
+			let po_num = '${post.po_num}';
+			
+			if(cm_content.trim() == ""){
+				alert("댓글을 입력하세요.");
+				$('.input-comment-insert').focus();
+				return;
+			}
+			
+			let obj = {
+					cm_content : cm_content,
+					cm_ori_num : cm_ori_num,
+					cm_po_num : po_num
+			};
+
+			$.ajax({
+				url : '<c:url value="/comment/insert"/>',
+				method : "post",
+				data : obj,
+				success : function(data){
+					if(data.result){
+						alert("댓글을 등록했습니다.");
+						cri.page = 1;
+						getCommentList(cri);
+					}
+					else{
+						alert("댓글을 등록하지 못했습니다.");
+					}
+					$('.input-comment-insert').val('');
+				},
+				error : function(xhr, status, error){
+					console.log("error");
+					console.log(xhr);
+				}
+			});
+		});
+		function checkLogin(){
+			if('${user.me_id}' == ''){
+				if(confirm('로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?')){
+					location.href = '<c:url value="/login"/>';
+					return false;
+				}else{
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		$(document).on('click', '.btn-comment-delete', function(){
+			let cm_num = $(this).data('cm_num');
+			let cm_ori_num = $(this).data('cm_ori_num');
+			
+			let obj ={
+				cm_num : cm_num,
+				cm_ori_num : cm_ori_num
+			}
+			
+			$.ajax({
+				url : '<c:url value="/comment/delete"/>',
+				method : "post",
+				data : obj,
+				success : function(data){
+					if(data.result){
+						alert("댓글을 삭제했습니다.");
+						getCommentList(cri);
+					}
+					else{
+						alert("댓글을 삭제하지 못했습니다.");
+					}
+				},
+				error : function(xhr, status, error){
+					console.log("error");
+					console.log(xhr);
+				}
+			});
+		})
+		
+		$(document).on('click', '.btn-comment-update', function(){
+			$('.comment-update-box').remove();
+			let cm_num = $(this).data('cm_num');
+			let cm_content = $(this).parent().next().text();
+			var str = `
+				<div class="comment-update-box input-group mb-3">
+					<textarea class="col-12 input-comment-update">\${cm_content}</textarea>
+					<button class="btn btn-outline-warning btn-comment-update-complete" data-cm_num="\${cm_num}">수정 완료</button>
+				</div>
+			`;
+			$('.comment-insert-box').after(str);
+			$('.comment-insert-box').hide();
+		});
+		
+		$(document).on('click', '.btn-comment-update-complete', function(){
+			let cm_num = $(this).data('cm_num');
+			let cm_content = $('.input-comment-update').val();
+			
+			let obj = {
+				cm_num : cm_num,
+				cm_content : cm_content
+			}
+			
+			$.ajax({
+				url : '<c:url value="/comment/update"/>',
+				method : "post",
+				data : obj,
+				success : function(data){
+					if(data.result){
+						alert("댓글을 수정했습니다.");
+						getCommentList(cri);
+					}
+					else{
+						alert("댓글을 수정하지 못했습니다.");
+					}
+					$('.comment-insert-box').show();
+					$('.comment-update-box').remove();
+				},
+				error : function(xhr, status, error){
+					console.log("error");
+					console.log(xhr);
+				}
+			});
+		});
 	</script>
 </body>
 </html>

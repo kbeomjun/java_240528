@@ -1,8 +1,12 @@
 package kr.kh.app.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.Part;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -12,14 +16,17 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import kr.kh.app.dao.PostDAO;
 import kr.kh.app.model.vo.CommentVO;
 import kr.kh.app.model.vo.CommunityVO;
+import kr.kh.app.model.vo.FileVO;
 import kr.kh.app.model.vo.MemberVO;
 import kr.kh.app.model.vo.PostVO;
 import kr.kh.app.model.vo.RecommendVO;
 import kr.kh.app.pagination.Criteria;
 import kr.kh.app.pagination.PageMaker;
+import kr.kh.app.utils.FileUploadUtils;
 
 public class PostServiceImp implements PostService {
 	private PostDAO postDao;
+	private String uploadPath = "D:\\uploads";
 	
 	public PostServiceImp() {
 		String resource = "kr/kh/app/config/mybatis-config.xml";
@@ -63,7 +70,7 @@ public class PostServiceImp implements PostService {
 	}
 
 	@Override
-	public boolean insertPost(PostVO post) {
+	public boolean insertPost(PostVO post, ArrayList<Part> files) {
 		if(post == null) {
 			return false;
 		}
@@ -73,7 +80,35 @@ public class PostServiceImp implements PostService {
 		if(post.getPo_content() == null || post.getPo_content().trim().length() == 0) {
 			return false;
 		}
-		return postDao.insertPost(post);
+		boolean res =  postDao.insertPost(post);
+		
+		if(!res) {
+			return false;
+		}
+		if(files == null || files.size() == 0) {
+			return true;
+		}
+		for(Part file : files) {
+			if("fileList".equals(file.getName())) {
+				uploadFile(post.getPo_num(), file);
+			}
+		}
+		return true;
+	}
+
+	private void uploadFile(int po_num, Part file) {
+		if(file == null) {
+			return;
+		}
+		String fileName = FileUploadUtils.getFileName(file);
+		if(fileName == null || fileName.trim().length() == 0) {
+			return;
+		}
+		
+		// 첨부파일을 업로드하고 업로드된 경로와 파일명을 가져옴
+		String uploadFileName = FileUploadUtils.upload(uploadPath, file);
+		FileVO fileVO = new FileVO(po_num, fileName, uploadFileName);
+		postDao.insertFile(fileVO);
 	}
 
 	@Override
@@ -102,7 +137,7 @@ public class PostServiceImp implements PostService {
 	}
 
 	@Override
-	public boolean updatePost(PostVO post, MemberVO user) {
+	public boolean updatePost(PostVO post, MemberVO user, List<Part> fileList, String[] fiNumStr) {
 		if(post == null || user == null) {
 			return false;
 		}
@@ -115,9 +150,39 @@ public class PostServiceImp implements PostService {
 		if(post.getPo_content() == null || post.getPo_content().trim().length() == 0) {
 			return false;
 		}
-		return postDao.updatePost(post);
+		boolean res = postDao.updatePost(post);
+		
+		if(!res) {
+			return false;
+		}
+		for(Part file : fileList) {
+			if("fileList".equals(file.getName())) {
+				uploadFile(post.getPo_num(), file);
+			}
+		}
+		if(fiNumStr == null) {
+			return true;
+		}
+		for(String num : fiNumStr) {
+			try {
+				int fi_num = Integer.parseInt(num);
+				deleteFile(fi_num);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return true;
 	}
 	
+	private void deleteFile(int fi_num) {
+		FileVO file = postDao.selectFile(fi_num);
+		if(file == null) {
+			return;
+		}
+		deleteFile(file);
+		postDao.deleteFile(fi_num);
+	}
+
 	private boolean checkWriter(int po_num, MemberVO user) {
 		if(user == null) {
 			return false;
@@ -134,7 +199,21 @@ public class PostServiceImp implements PostService {
 
 	@Override
 	public void deletePost(PostVO post) {
+		List<FileVO> fileList = postDao.selectFileList(post.getPo_num());
+		for(FileVO file : fileList) {
+			deleteFile(file);
+		}
 		postDao.deletePost(post);
+	}
+
+	private void deleteFile(FileVO file) {
+		if(file == null) {
+			return;
+		}
+		File realFile = new File(uploadPath + file.getFi_name().replace('/', File.separatorChar));
+		if(realFile.exists()) {
+			realFile.delete();
+		}
 	}
 
 	@Override
@@ -227,5 +306,10 @@ public class PostServiceImp implements PostService {
 			return false;
 		}
 		return postDao.updateComment(comment);
+	}
+
+	@Override
+	public List<FileVO> getFileList(int po_num) {
+		return postDao.selectFileList(po_num);
 	}
 }

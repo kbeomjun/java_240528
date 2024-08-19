@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.app.model.vo.CommentVO;
 import kr.kh.app.model.vo.CommunityVO;
+import kr.kh.app.model.vo.FileVO;
 import kr.kh.app.model.vo.MemberVO;
 import kr.kh.app.model.vo.PostVO;
 import kr.kh.app.model.vo.RecommendVO;
@@ -50,4 +51,14 @@ public interface PostDAO {
 	boolean deleteComment(@Param("cm_num")int cm_num);
 
 	boolean updateComment(@Param("cm")CommentVO comment);
+
+	void insertFile(@Param("file")FileVO fileVO);
+
+	List<FileVO> selectFileList(@Param("po_num")int po_num);
+
+	FileVO selectFile(@Param("fi_num")int fi_num);
+
+	void deleteFile(@Param("fi_num")int fi_num);
+
+	boolean insertCommunity(@Param("co_name")String co_name);
 }

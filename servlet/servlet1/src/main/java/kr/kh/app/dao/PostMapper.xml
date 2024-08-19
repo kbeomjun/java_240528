@@ -42,7 +42,7 @@
 		</if>
 	</select>
 	
-	<insert id="insertPost">
+	<insert id="insertPost" useGeneratedKeys="true" keyProperty="post.po_num">
 		insert into post(po_co_num, po_title, po_content, po_me_id) 
 		values(#{post.po_co_num}, #{post.po_title}, #{post.po_content}, #{post.po_me_id})
 	</insert>
@@ -121,4 +121,25 @@
 	<update id="updateComment">
 		update comment set cm_content = #{cm.cm_content} where cm_num = #{cm.cm_num};
 	</update>
+	
+	<insert id="insertFile">
+		insert into file(fi_po_num, fi_name, fi_ori_name)
+		values(#{file.fi_po_num}, #{file.fi_name}, #{file.fi_ori_name});
+	</insert>
+	
+	<select id="selectFileList" resultType="FileVO">
+		select * from file where fi_po_num = #{po_num};
+	</select>
+	
+	<select id="selectFile" resultType="FileVO">
+		select * from file where fi_num = #{fi_num};
+	</select>
+	
+	<delete id="deleteFile">
+		delete from file where fi_num = #{fi_num};
+	</delete>
+	
+	<insert id="insertCommunity">
+		insert into community(co_name) values(#{co_name});
+	</insert>
 </mapper>

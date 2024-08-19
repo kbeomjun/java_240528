@@ -51,6 +51,19 @@
 			<label for="content">내용:</label>
 			<div class="form-control" style="min-height: 400px; overflow: scroll;">${post.po_content}</div>
 		</div>
+		<div class="form-group">
+			<label for="content">첨부파일:</label>
+			<c:if test="${fileList.size() == 0}">
+				<div class="form-control">첨부파일 없음</div>	 
+			</c:if>
+			<c:if test="${fileList.size() != 0}">
+				<c:forEach items="${fileList}" var="file">
+					<a class="form-control" 
+						href="<c:url value="/download?fileName=${file.fi_name}"/>"
+						download="${file.fi_ori_name}">${file.fi_ori_name}</a>
+				</c:forEach>
+			</c:if>
+		</div>
 		<a href="<c:url value="/post/list?co_num=${post.po_co_num}"/>" class="btn btn-outline-primary">목록</a>
 		<c:if test="${user ne null && post.po_me_id == user.me_id}">
 			<a href="<c:url value="/post/update?po_num=${post.po_num}"/>" class="btn btn-outline-warning">수정</a>

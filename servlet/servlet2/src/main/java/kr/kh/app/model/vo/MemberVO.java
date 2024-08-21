@@ -19,9 +19,14 @@ public class MemberVO {
 	private String me_ms_name; 
 	private Date me_stop;
 
-	public MemberVO(String id, String pw, String email) {
-		this.me_id = id;
-		this.me_pw = pw;
-		this.me_email = email;
+	public MemberVO(String me_id, String me_pw, String me_email) {
+		this.me_id = me_id;
+		this.me_pw = me_pw;
+		this.me_email = me_email;
+	}
+
+	public MemberVO(String me_id, String me_pw) {
+		this.me_id = me_id;
+		this.me_pw = me_pw;
 	}
 }

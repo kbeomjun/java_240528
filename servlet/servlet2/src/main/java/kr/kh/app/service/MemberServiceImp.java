@@ -13,7 +13,7 @@ import kr.kh.app.dao.MemberDAO;
 import kr.kh.app.model.vo.MemberVO;
 
 public class MemberServiceImp implements MemberService {
-private MemberDAO memberDao;
+	private MemberDAO memberDao;
 	
 	public MemberServiceImp() {
 		String resource = "kr/kh/app/config/mybatis-config.xml";
@@ -61,5 +61,17 @@ private MemberDAO memberDao;
 	@Override
 	public boolean checkId(String me_id) {
 		return memberDao.selectMember(me_id) == null;
+	}
+
+	@Override
+	public boolean checkUser(MemberVO user) {
+		if(user == null) {
+			return false;
+		}
+		MemberVO user2 = memberDao.selectMember(user.getMe_id());
+		if(user2 == null || !user2.getMe_pw().equals(user.getMe_pw())) {
+			return false;
+		}
+		return true;
 	}
 }

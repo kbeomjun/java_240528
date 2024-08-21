@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.app.dao.PostDAO">
+	<select id="selectCommunityList" resultType="CommunityVO">
+		select * from community order by co_num;
+	</select>
+	
+	<select id="selectCommunity" resultType="CommunityVO">
+		select * from community where co_num = #{co_num};
+	</select>
+	
+	<select id="selectPostList" resultType="PostVO">
+		select post.*, count(if(re_state=1, re_state, null)) po_up, count(if(re_state=-1, re_state, null)) po_down
+		from post left join recommend on po_num = re_po_num
+		where po_co_num = #{cri.co_num}
+		<if test="cri.type == 'all'">
+		and (po_title like concat('%', #{cri.search}, '%') or po_me_id = #{cri.search})
+		</if>
+		<if test="cri.type == 'title'">
+		and po_title like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 'id'">
+		and po_me_id = #{cri.search}
+		</if>
+		group by po_num 
+		order by po_num desc 
+		limit #{cri.pageStart}, #{cri.perPageNum};
+	</select>
+	
+	<select id="selectPostTotalCount" resultType="int">
+		select count(*) from post where po_co_num = #{cri.co_num} 
+		<if test="cri.type == 'all'">
+		and (po_title like concat('%', #{cri.search}, '%') or po_me_id = #{cri.search})
+		</if>
+		<if test="cri.type == 'title'">
+		and po_title like concat('%', #{cri.search}, '%')
+		</if>
+		<if test="cri.type == 'id'">
+		and po_me_id = #{cri.search}
+		</if>
+	</select>
+</mapper>

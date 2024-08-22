@@ -12,7 +12,6 @@
 	<script type="text/javascript">
 		if('${msg}' != ''){
 			alert('${msg}');
-			
 		}
 		if('${url}' != ''){
 			location.href = '<c:url value="${url}"/>';

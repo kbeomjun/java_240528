@@ -13,7 +13,7 @@
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	<div class="container pt-3" style="min-height: calc(100vh - 240px)">
-		<h1>${co.co_name} 커뮤니티 게시글 목록</h1>
+		<h1>${co.co_name} 게시글 목록</h1>
 		<form class="input-group mt-3 mb-3" action="<c:url value="/post/list"/>">
 			<div class="input-group-prepend">
 				<select class = form-control name="type">
@@ -46,7 +46,9 @@
 						<td>
 							<a href="<c:url value="/post/detail?po_num=${po.po_num}"/>">${po.po_title}</a>
 						</td>
-						<td>${po.po_me_id}</td>
+						<td>
+							<a href="<c:url value="/post/list?type=id&search=${po.po_me_id}&co_num=${pm.cri.co_num}"/>">${po.po_me_id}</a>
+						</td>
 						<td>
 							<fmt:formatDate value="${po.po_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 						</td>
@@ -67,65 +69,70 @@
 		    </tbody>
 	  	</table>
 	  	
-	  	<ul class="pagination justify-content-center">
-	  		<c:choose>
-	  			<c:when test="${pm.prev}">
-	  				<li class="page-item">
-			    		<c:url var="url" value="/post/list">
+	  	<c:if test="${pm.endPage ne 0}">
+	  		<ul class="pagination justify-content-center">
+		  		<c:choose>
+		  			<c:when test="${pm.prev}">
+		  				<li class="page-item">
+				    		<c:url var="url" value="/post/list">
+			  					<c:param name="co_num" value="${pm.cri.co_num}"/>
+			  					<c:param name="page" value="${pm.startPage-1}"/>
+			  					<c:param name="type" value="${pm.cri.type}"/>
+			  					<c:param name="search" value="${pm.cri.search}"/>
+			  				</c:url>
+				    		<a class="page-link link-prev" href="${url}">이전</a>
+				    	</li>
+		  			</c:when>
+		  			<c:otherwise>
+		  				<li class="page-item disabled">
+				    		<a class="page-link link-prev" href="#">이전</a>
+				    	</li>
+		  			</c:otherwise>
+		  		</c:choose>
+		  		
+		  		<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+		  			<c:choose>
+		  				<c:when test="${pm.cri.page == i}">
+		  					<c:set var="active" value="active"/>		
+		  				</c:when>
+		  				<c:otherwise>
+		  					<c:set var="active" value=""/>
+		  				</c:otherwise>
+		  			</c:choose>
+		  			<li class="page-item ${active}">
+		  				<c:url var="url" value="/post/list">
 		  					<c:param name="co_num" value="${pm.cri.co_num}"/>
-		  					<c:param name="page" value="${pm.startPage-1}"/>
+		  					<c:param name="page" value="${i}"/>
 		  					<c:param name="type" value="${pm.cri.type}"/>
 		  					<c:param name="search" value="${pm.cri.search}"/>
 		  				</c:url>
-			    		<a class="page-link link-prev" href="${url}">이전</a>
-			    	</li>
-	  			</c:when>
-	  			<c:otherwise>
-	  				<li class="page-item disabled">
-			    		<a class="page-link link-prev" href="#">이전</a>
-			    	</li>
-	  			</c:otherwise>
-	  		</c:choose>
-	  		
-	  		<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-	  			<c:choose>
-	  				<c:when test="${pm.cri.page == i}">
-	  					<c:set var="active" value="active"/>		
-	  				</c:when>
-	  				<c:otherwise>
-	  					<c:set var="active" value=""/>
-	  				</c:otherwise>
-	  			</c:choose>
-	  			<li class="page-item ${active}">
-	  				<c:url var="url" value="/post/list">
-	  					<c:param name="co_num" value="${pm.cri.co_num}"/>
-	  					<c:param name="page" value="${i}"/>
-	  					<c:param name="type" value="${pm.cri.type}"/>
-	  					<c:param name="search" value="${pm.cri.search}"/>
-	  				</c:url>
-		    		<a class="page-link" href="${url}">${i}</a>
-	    		</li>
-	  		</c:forEach>
-	  		
-	  		<c:choose>
-	  			<c:when test="${pm.next}">
-	  				<li class="page-item">
-			    		<c:url var="url" value="/post/list">
-		  					<c:param name="co_num" value="${pm.cri.co_num}"/>
-		  					<c:param name="page" value="${pm.endPage+1}"/>
-		  					<c:param name="type" value="${pm.cri.type}"/>
-		  					<c:param name="search" value="${pm.cri.search}"/>
-		  				</c:url>
-			    		<a class="page-link link-next" href="${url}">다음</a>
-			    	</li>
-	  			</c:when>
-	  			<c:otherwise>
-	  				<li class="page-item disabled">
-			    		<a class="page-link link-next" href="#">다음</a>
-			    	</li>
-	  			</c:otherwise>
-	  		</c:choose>
-	  	</ul>
+			    		<a class="page-link" href="${url}">${i}</a>
+		    		</li>
+		  		</c:forEach>
+		  		
+		  		<c:choose>
+		  			<c:when test="${pm.next}">
+		  				<li class="page-item">
+				    		<c:url var="url" value="/post/list">
+			  					<c:param name="co_num" value="${pm.cri.co_num}"/>
+			  					<c:param name="page" value="${pm.endPage+1}"/>
+			  					<c:param name="type" value="${pm.cri.type}"/>
+			  					<c:param name="search" value="${pm.cri.search}"/>
+			  				</c:url>
+				    		<a class="page-link link-next" href="${url}">다음</a>
+				    	</li>
+		  			</c:when>
+		  			<c:otherwise>
+		  				<li class="page-item disabled">
+				    		<a class="page-link link-next" href="#">다음</a>
+				    	</li>
+		  			</c:otherwise>
+		  		</c:choose>
+		  	</ul>
+	  	</c:if>
+	  	<div class="clearfix">
+	  		<a class="btn btn-outline-success float-right" href="<c:url value="/post/insert?co_num=${co.co_num}"/>">게시글 등록</a>	
+	  	</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </body>

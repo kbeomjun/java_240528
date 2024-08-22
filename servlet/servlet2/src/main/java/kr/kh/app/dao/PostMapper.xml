@@ -41,4 +41,21 @@
 		and po_me_id = #{cri.search}
 		</if>
 	</select>
+	
+	<select id="selectPost" resultType="PostVO">
+		select * from post where po_num = #{po_num};
+	</select>
+	
+	<update id="updatePostView">
+		update post set po_views = po_views + 1 where po_num = #{po.po_num};
+	</update>
+	
+	<insert id="insertPost">
+		insert into post(po_co_num, po_title, po_content, po_me_id)
+		values(#{po.po_co_num}, #{po.po_title}, #{po.po_content}, #{po.po_me_id});
+	</insert>
+	
+	<update id="updatePost">
+		update post set po_title = #{po.po_title}, po_content = #{po.po_content} where po_num = #{po.po_num};
+	</update>
 </mapper>

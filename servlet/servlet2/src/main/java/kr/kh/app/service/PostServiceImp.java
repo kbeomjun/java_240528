@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import kr.kh.app.dao.PostDAO;
 import kr.kh.app.model.vo.CommunityVO;
+import kr.kh.app.model.vo.MemberVO;
 import kr.kh.app.model.vo.PostVO;
 import kr.kh.app.pagination.Criteria;
 import kr.kh.app.pagination.PageMaker;
@@ -57,5 +58,37 @@ public class PostServiceImp implements PostService {
 		}
 		int totalCount = postDao.selectPostTotalCount(cri);
 		return new PageMaker(totalCount, displayPageNum, cri);
+	}
+
+	@Override
+	public PostVO getPost(int po_num) {
+		PostVO post = postDao.selectPost(po_num); 
+		if(post == null) {
+			throw new RuntimeException();
+		}
+		postDao.updatePostView(post);
+		return postDao.selectPost(po_num);
+	}
+
+	@Override
+	public boolean insertPost(PostVO post) {
+		if(post.getPo_title() == null || post.getPo_title().trim().length() == 0) {
+			return false;
+		}
+		if(post.getPo_content() == null || post.getPo_content().trim().length() == 0) {
+			return false;
+		}
+		return postDao.insertPost(post);
+	}
+
+	@Override
+	public boolean updatePost(PostVO post) {
+		if(post.getPo_title() == null || post.getPo_title().trim().length() == 0) {
+			return false;
+		}
+		if(post.getPo_content() == null || post.getPo_content().trim().length() == 0) {
+			return false;
+		}
+		return postDao.updatePost(post);
 	}
 }

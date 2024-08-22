@@ -27,7 +27,7 @@ import kr.kh.app.service.PostServiceImp;
 public class PostInsert extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PostService postService = new PostServiceImp();
-       
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String coNumStr = request.getParameter("co_num");
 		try {

@@ -12,6 +12,8 @@
 				<li class="nav-item">
 					<a class="navbar-brand" href="<c:url value="/"/>">Home</a>
 				</li>
+			</ul>
+			<ul class="navbar-nav">
 				<li class="nav-item dropdown dropdown-community">
 					<a class="nav-link dropdown-toggle toggle-community" href="#" id="navbardrop" data-toggle="dropdown">
 						커뮤니티
@@ -31,14 +33,6 @@
 			    <li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
 						Drop3
-					</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">없음</a>
-					</div>
-			    </li>
-			    <li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-						Drop4
 					</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">없음</a>

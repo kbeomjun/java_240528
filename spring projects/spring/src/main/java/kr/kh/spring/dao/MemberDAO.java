@@ -2,6 +2,10 @@ package kr.kh.spring.dao;
 
 import org.apache.ibatis.annotations.Param;
 
-public interface MemberDAO {
+import kr.kh.spring.model.vo.MemberVO;
 
+public interface MemberDAO {
+	boolean insertMember(@Param("me")MemberVO member);
+
+	MemberVO selectMember(@Param("me_id")String me_id);
 }

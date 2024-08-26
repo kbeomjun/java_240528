@@ -11,8 +11,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-	<div class="container-fluid">
-		<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="justify-content: space-between;">
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark" style="justify-content: space-between;">
+		<div class="container">
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="navbar-brand" href="<c:url value="/"/>">Home</a>
@@ -25,6 +25,7 @@
 					  커뮤니티
 					</a>
 					<div class="dropdown-menu" id="community-list">
+						
 					</div>
 				</li>
 			</ul>
@@ -43,8 +44,10 @@
 				    </li>
 			    </c:if>
 			</ul>
-		</nav>
+		</div>
+	</nav>
 		
+	<div class="container pt-3" style="min-height: calc(100vh - 240px)">
 		<h1>Hello world!</h1>
 		<p>안녕하세요. 제 이름은 ${name}입니다.</p>
 		
@@ -56,11 +59,11 @@
 			<br>
 			<button type="submit">전송</button>
 		</form>
+	</div>
 		
-		<div class="jumbotron jumbotron-fluid mb-0">
-			<div class="container">
-				<h1>푸터</h1>
-			</div>
+	<div class="jumbotron jumbotron-fluid mb-0">
+		<div class="container">
+			<h1>푸터</h1>
 		</div>
 	</div>
 </body>

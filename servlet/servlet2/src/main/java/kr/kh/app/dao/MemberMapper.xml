@@ -24,4 +24,20 @@
 	<select id="selectMemberBySid" resultType="MemberVO">
 		select * from member where me_cookie = #{sid} and me_limit > now()
 	</select>
+	
+	<update id="updateMemberFail">
+		update member 
+		set
+			<if test="i == 1">
+			me_fail = me_fail + 1
+			</if>
+			<if test="i == 0">
+			me_fail = 0
+			</if>
+		where me_id = #{user.me_id};
+	</update>
+	
+	<update id="updateMemberStop">
+		update member set me_stop = #{me_stop} where me_id = #{user.me_id};
+	</update>
 </mapper>

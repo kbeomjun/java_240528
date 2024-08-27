@@ -10,7 +10,7 @@ public interface MemberService {
 
 	boolean checkId(String me_id);
 
-	boolean checkUser(MemberVO user);
+	String checkUser(MemberVO user);
 
 	Cookie createCookie(MemberVO user, HttpServletRequest request);
 

@@ -2,6 +2,7 @@ package kr.kh.app.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -69,15 +70,42 @@ public class MemberServiceImp implements MemberService {
 	}
 
 	@Override
-	public boolean checkUser(MemberVO user) {
+	public String checkUser(MemberVO user) {
+		String res = "";
 		if(user == null) {
-			return false;
+			res = "아이디를 입력하세요.";
+			return res;
 		}
 		MemberVO user2 = memberDao.selectMember(user.getMe_id());
-		if(user2 == null || !user2.getMe_pw().equals(user.getMe_pw())) {
-			return false;
+		if(user2 == null) {
+			res = "없는 아이디입니다.";
+			return res;
 		}
-		return true;
+		Date date = new Date(System.currentTimeMillis());
+		if(user2.getMe_stop() != null && user2.getMe_stop().compareTo(date) > 0) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			format.format(user2.getMe_stop());
+			res = "계정이 잠겼습니다. "+format.format(user2.getMe_stop())+"까지 서비스 이용이 불가능합니다.";
+			return res;
+		}
+		if(!user2.getMe_pw().equals(user.getMe_pw())) {
+			memberDao.updateMemberFail(user2, 1);
+			int fail = user2.getMe_fail() + 1;
+			if(fail < 5) {
+				res = "비밀번호가 틀렸습니다. 5회 이상 틀릴시 계정이 잠깁니다.("+fail+"/5)";
+			}else {
+				int time = 60 * 30;
+				Date stop = new Date(System.currentTimeMillis() + time * 1000);
+				memberDao.updateMemberStop(user2, stop);
+				res = "비밀번호가 틀렸습니다. 5회 이상 틀려서 계정이 30분동안 잠깁니다.("+fail+"/5)";
+			}
+			return res;
+		}
+		
+		Date stop = null;
+		memberDao.updateMemberFail(user2, 0);
+		memberDao.updateMemberStop(user2, stop);
+		return res;
 	}
 
 	@Override

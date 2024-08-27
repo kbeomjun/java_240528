@@ -32,8 +32,13 @@ public class Login extends HttpServlet {
 		String me_id = request.getParameter("me_id");
 		String me_pw = request.getParameter("me_pw");
 		MemberVO user = new MemberVO(me_id, me_pw);
-		request.getSession().setAttribute("user", user);
-		if(memberService.checkUser(user)) {
+		
+		String res = memberService.checkUser(user);
+		if(!res.equals("")) {
+			request.setAttribute("url", "/login");
+			request.setAttribute("msg", res);
+		}else {
+			request.getSession().setAttribute("user", user);
 			request.setAttribute("url", "/");
 			request.setAttribute("msg", "로그인을 하였습니다.");
 			String auto = request.getParameter("auto");
@@ -42,9 +47,6 @@ public class Login extends HttpServlet {
 				Cookie cookie = memberService.createCookie(user, request);
 				response.addCookie(cookie);
 			}
-		}else {
-			request.setAttribute("url", "/login");
-			request.setAttribute("msg", "로그인을 하지 못했습니다.");
 		}
 		request.getRequestDispatcher("/WEB-INF/views/message.jsp").forward(request, response);
 	}

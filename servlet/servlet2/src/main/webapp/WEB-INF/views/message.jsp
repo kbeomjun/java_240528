@@ -10,12 +10,11 @@
 </head>
 <body>
 	<script type="text/javascript">
-		if('${msg}' != ''){
+		var msg = '${msg}';
+		if(msg != ''){
 			alert('${msg}');
 		}
-		if('${url}' != ''){
-			location.href = '<c:url value="${url}"/>';
-		}
+		location.href = '<c:url value="${url}"/>';
 	</script>
 </body>
 </html>

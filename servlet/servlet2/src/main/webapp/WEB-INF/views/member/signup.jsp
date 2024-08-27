@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 	<jsp:include page="/WEB-INF/views/common/head.jsp"/>
-	<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.5.1/uicons-solid-rounded/css/uicons-solid-rounded.css'>
 	<style type="text/css">
 		.error{color:red; margin-bottom: 5px;}
 		.form-group{margin-bottom: 0;}

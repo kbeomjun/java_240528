@@ -40,4 +40,8 @@
 	<update id="updateMemberStop">
 		update member set me_stop = #{me_stop} where me_id = #{user.me_id};
 	</update>
+	
+	<update id="updateMemberPw">
+		update member set me_pw = #{me_pw} where me_id = #{user.me_id};
+	</update>
 </mapper>

@@ -138,4 +138,18 @@ public class MemberServiceImp implements MemberService {
 	public MemberVO getMemberBySid(String sid) {
 		return memberDao.selectMemberBySid(sid);
 	}
+
+	@Override
+	public boolean updatePw(MemberVO user, String me_pw) {
+		if(user == null) {
+			return false;
+		}
+		if(!checkRegex(me_pw, "^[a-zA-Z0-9!@#$]{6,15}$")) {
+			return false;
+		}
+		if(user.getMe_pw().equals(me_pw)) {
+			return false;
+		}
+		return memberDao.updateMemberPw(user, me_pw);
+	}
 }

@@ -18,4 +18,6 @@ public interface MemberDAO {
 	void updateMemberFail(@Param("user")MemberVO user2, @Param("i")int i);
 
 	void updateMemberStop(@Param("user")MemberVO user2, @Param("me_stop")Date stop);
+
+	boolean updateMemberPw(@Param("user")MemberVO user, @Param("me_pw")String me_pw);
 }

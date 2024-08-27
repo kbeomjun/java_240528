@@ -10,7 +10,7 @@
 		<div class="container">
 			<ul class="navbar-nav">
 				<li class="nav-item">
-					<a class="navbar-brand" href="<c:url value="/"/>">Home</a>
+					<a class="navbar-brand" href="<c:url value="/"/>"><i class="fi fi-rr-home"></i></a>
 				</li>
 			</ul>
 			<ul class="navbar-nav">

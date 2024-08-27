@@ -52,7 +52,7 @@ public class MemberServiceImp implements MemberService {
 		if(!checkRegex(member.getMe_pw(), "^[a-zA-Z0-9!@#$]{6,15}$")) {
 			return false;
 		}
-		if(!checkRegex(member.getMe_email(), "^[a-zA-Z0-9_]+@[a-zA-Z0-9_]+(\\.[a-zA-Z]{2,}){1,}$")) {
+		if(!checkRegex(member.getMe_email(), "^\\w{6,13}@\\w{4,8}.[a-z]{2,3}$")) {
 			return false;
 		}
 		try {

@@ -21,6 +21,7 @@ public class Logout extends HttpServlet {
 		MemberVO user = (MemberVO)request.getSession().getAttribute("user");
 		if(user != null) {
 			user.setMe_cookie(null);
+			user.setMe_limit(null);
 			memberService.updateMemberCookie(user);
 		}
 		

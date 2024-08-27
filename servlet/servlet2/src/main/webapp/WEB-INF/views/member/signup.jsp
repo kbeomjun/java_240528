@@ -17,8 +17,10 @@
 </head>
 <body>
 	<div class="container container-body col-4">
-		<a class="navbar-brand" href="<c:url value="/"/>" style="color:black;"><h2>Home</h2></a>
-		<form action="<c:url value="/signup"/>" method="post" id="form">
+		<div class="d-flex justify-content-center">
+			<a class="navbar-brand" href="<c:url value="/"/>" style="color:black;"><h1>Home</h1></a>
+		</div>
+		<form action="<c:url value="/signup"/>" method="post" id="form" style="margin-top: 30px">
 			<div style="min-height: calc(100vh - 240px)">
 				<div class="form-group input-group">
 					<div class="input-group-prepend">

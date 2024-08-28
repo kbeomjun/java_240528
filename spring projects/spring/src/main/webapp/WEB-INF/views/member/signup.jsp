@@ -13,6 +13,9 @@
 		.error{
 			color:red;
 		}
+		.error.id-ok{
+			color:green;
+		}
 	</style>
 </head>
 <body>
@@ -76,6 +79,13 @@
 				}
 			},
 			submitHandler : function(){
+				var id = $('#id').val();
+				var res = checkId(id);
+				if(res == 0){
+					displayCheckId(res);
+					alert('이미 사용중인 아이디입니다.');
+					return false;
+				}
 				return true;
 			}
 		});
@@ -83,6 +93,44 @@
 			var re = new RegExp(regex);
 			return this.optional(element) || re.test(value);
 		}, "정규표현식을 확인하세요.");
+		
+		$('#id').keyup(function(){
+			var id = $(this).val();
+			var result = checkId(id);
+			displayCheckId(result);
+		});
+		function checkId(id){
+			var regex = /^\w{6,13}$/;
+			if(!regex.test(id)){
+				return -1;
+			}
+			var res = 0;
+			$.ajax({
+				async : false,
+				url : '<c:url value="/check/id"/>', 
+				type : 'get',
+				data : {
+					id : id
+				},
+				success : function (data){
+					res = data? 1 : 0;
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					
+				}
+			});
+			return res;
+		}
+		function displayCheckId(result){
+			$('#check-id').remove();
+			if(result == 1){
+				var str = `<label id="check-id" class="error id-ok">사용가능한 아이디입니다.</label>`;
+				$('#id').after(str);
+			}else if(result == 0){
+				var str = `<label id="check-id" class="error">이미 사용중인 아이디입니다.</label>`;
+				$('#id').after(str);
+			}
+		}
 	</script>
 </body>
 </html>

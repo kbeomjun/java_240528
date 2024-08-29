@@ -62,7 +62,7 @@
 			</div>
 			<div>
 					<label for="pw">비밀번호 : </label>
-					<input type="password" name="pw" id="pw" placeholder="비번" required>
+					<input type="password" name="pw" id="pw" placeholder="비번">
 			</div>
 			<div>
 				<input type="hidden" name="name" value="홍길동">
@@ -89,10 +89,30 @@
 			<div>
 				<div>성별을 선택하세요.</div>
 				<label>
-					<input type="radio" name="gender" value="남성" checked> 남성
+					<input type="radio" name="gender1" value="남성" required> 남성
 				</label>
 				<label>
-					<input type="radio" name="gender" value="여성"> 여성
+					<input type="radio" name="gender1" value="여성"> 여성
+				</label>
+				<label>
+					<input type="radio" name="gender1" value="중성"> 중성
+				</label>
+				<label>
+					<input type="radio" name="gender1" value="성"> 성
+				</label>
+			</div>
+			<div>
+				<div>성별을 선택하세요.</div>
+				<label>
+					<input type="radio" name="gender2" value="남성" required>
+				<label>
+					<input type="radio" name="gender2" value="여성">
+				</label>
+				<label>
+					<input type="radio" name="gender2" value="중성">
+				</label>
+				<label>
+					<input type="radio" name="gender2" value="성">
 				</label>
 			</div>
 		</fieldset>

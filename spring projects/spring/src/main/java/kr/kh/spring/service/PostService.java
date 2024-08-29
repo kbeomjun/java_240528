@@ -83,4 +83,22 @@ public class PostService {
 			e.printStackTrace();
 		}
 	}
+
+	public void updatePostView(PostVO post) {
+		postDao.updatePostView(post);
+	}
+
+	public PostVO getPost(PostVO post) {
+		if(post == null) {
+			return null;
+		}
+		return postDao.selectPost(post);
+	}
+
+	public List<FileVO> getFileList(PostVO post) {
+		if(post == null) {
+			return null;
+		}
+		return postDao.selectFileList(post);
+	}
 }

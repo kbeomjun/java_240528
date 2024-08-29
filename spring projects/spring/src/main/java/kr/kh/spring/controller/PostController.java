@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.spring.Pagination.PageMaker;
 import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.model.vo.CommunityVO;
+import kr.kh.spring.model.vo.FileVO;
 import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
 import kr.kh.spring.service.PostService;
@@ -56,5 +57,16 @@ public class PostController {
 			model.addAttribute("msg", "게시글을 등록하지 못했습니다.");
 		}
 		return "/main/message";
+	}
+	
+	@GetMapping("/detail")
+	public String detail(Model model, PostVO post, PostCriteria cri) {
+		postService.updatePostView(post);
+		post = postService.getPost(post);
+		List<FileVO> list = postService.getFileList(post);
+		model.addAttribute("po", post);
+		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		return "/post/detail";
 	}
 }

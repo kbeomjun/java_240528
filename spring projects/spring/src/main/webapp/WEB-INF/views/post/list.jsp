@@ -39,7 +39,14 @@
 				      	<tr>
 					        <td>${po.po_num}</td>
 					        <td>
-					        	<a href="<c:url value="/post/detail?po_num=${po.po_num}"/>">${po.po_title}</a>
+						        <c:url var="url" value="/post/detail">
+						        	<c:param name="po_num" value="${po.po_num}"/>
+									<c:param name="co_num" value="${pm.cri.co_num}"/>
+									<c:param name="page" value="${pm.cri.page}"/>
+									<c:param name="type" value="${pm.cri.type}"/>
+									<c:param name="search" value="${pm.cri.search}"/>
+								</c:url>
+					        	<a href="${url}">${po.po_title}</a>
 					        </td>
 					        <td>
 					        	<c:url var="url" value="/post/list">
@@ -50,7 +57,7 @@
 					        	<a href="${url}">${po.po_me_id}</a>
 				        	</td>
 					        <td>
-					        	<fmt:formatDate value="${po.po_date}" pattern="yyyy-MM-dd"/>
+					        	<fmt:formatDate value="${po.po_date}" pattern="yyyy.MM.dd"/>
 				        	</td>
 					        <td>0</td>
 					        <td>${po.po_view}</td>

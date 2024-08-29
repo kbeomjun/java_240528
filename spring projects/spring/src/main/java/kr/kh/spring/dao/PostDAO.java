@@ -19,4 +19,10 @@ public interface PostDAO {
 	boolean insertPost(@Param("po")PostVO post);
 
 	void insertFile(@Param("fi")FileVO fileVO);
+
+	void updatePostView(@Param("po")PostVO post);
+
+	PostVO selectPost(@Param("po")PostVO post);
+
+	List<FileVO> selectFileList(@Param("po")PostVO post);
 }

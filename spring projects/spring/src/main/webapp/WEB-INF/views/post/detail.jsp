@@ -33,17 +33,21 @@
 		</div>
 		<div class="form-group">
 			<label for="date">작성일:</label>
-			<div class="form-control"><fmt:formatDate value="${po.po_date}" pattern="yyyy.MM.dd"/></div>
+			<div class="form-control">
+				<fmt:formatDate value="${po.po_date}" pattern="yyyy.MM.dd"/>
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="views">조회수:</label>
 			<div class="form-control">${po.po_view}</div>
 		</div>
 		<div class="text-center">
-			<a href="#" data-re_state="1" 
-				class="btn-up btn btn<c:if test="${re.re_state ne 1}">-outline</c:if>-danger">추천 <span>${po.po_up}</span></a>
-			<a href="#" data-re_state="-1"	
-				class="btn-down btn btn<c:if test="${re.re_state ne -1}">-outline</c:if>-danger">비추천 <span>${po.po_down}</span></a>
+			<a href="#" data-re_state="1" class="btn-up btn btn<c:if test="${re.re_state ne 1}">-outline</c:if>-success">
+				추천 <span>${po.po_up}</span>
+			</a>
+			<a href="#" data-re_state="-1" class="btn-down btn btn<c:if test="${re.re_state ne -1}">-outline</c:if>-danger">
+				비추천 <span>${po.po_down}</span>
+			</a>
 		</div>
 		<div class="form-group">
 			<label for="content">내용:</label>
@@ -56,6 +60,9 @@
 					${fi.fi_ori_name}
 				</a>
 			</c:forEach>
+			<c:if test="${list.size() eq 0}">
+				없음
+			</c:if>
 		</div>
 	</c:if>
 	<c:if test="${po eq null}">
@@ -68,5 +75,23 @@
 		<c:param name="search" value="${cri.search}"/>
 	</c:url>
 	<a href="${url}" class="btn btn-outline-info">목록</a>
+	<c:if test="${user.me_id eq po.po_me_id}">
+		<c:url var="url" value="/post/update">
+			<c:param name="po_num" value="${po.po_num}"/>
+			<c:param name="co_num" value="${cri.co_num}"/>
+			<c:param name="page" value="${cri.page}"/>
+			<c:param name="type" value="${cri.type}"/>
+			<c:param name="search" value="${cri.search}"/>
+		</c:url>
+		<a href="${url}" class="btn btn-outline-warning">수정</a>
+		<c:url var="url" value="/post/delete">
+			<c:param name="po_num" value="${po.po_num}"/>
+			<c:param name="co_num" value="${cri.co_num}"/>
+			<c:param name="page" value="${cri.page}"/>
+			<c:param name="type" value="${cri.type}"/>
+			<c:param name="search" value="${cri.search}"/>
+		</c:url>
+		<a href="${url}" class="btn btn-outline-danger">삭제</a>
+	</c:if>
 </body>
 </html>

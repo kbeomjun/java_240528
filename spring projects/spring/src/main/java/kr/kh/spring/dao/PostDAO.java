@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.model.vo.CommunityVO;
 import kr.kh.spring.model.vo.FileVO;
 import kr.kh.spring.model.vo.PostVO;
+import kr.kh.spring.pagination.PostCriteria;
 
 public interface PostDAO {
 	List<CommunityVO> selectCommunityList();
@@ -25,4 +25,12 @@ public interface PostDAO {
 	PostVO selectPost(@Param("po")PostVO post);
 
 	List<FileVO> selectFileList(@Param("po")PostVO post);
+
+	FileVO selectFile(@Param("fi_num")int fi_num);
+
+	void deleteFile(@Param("fi_num")int fi_num);
+
+	boolean updatePost(@Param("po")PostVO post);
+
+	boolean deletePost(@Param("po")PostVO post);
 }

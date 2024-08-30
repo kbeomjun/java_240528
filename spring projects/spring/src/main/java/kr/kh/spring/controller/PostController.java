@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.spring.Pagination.PageMaker;
-import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.model.vo.CommunityVO;
 import kr.kh.spring.model.vo.FileVO;
 import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
+import kr.kh.spring.pagination.PageMaker;
+import kr.kh.spring.pagination.PostCriteria;
 import kr.kh.spring.service.PostService;
 
 @Controller
@@ -68,5 +68,38 @@ public class PostController {
 		model.addAttribute("list", list);
 		model.addAttribute("cri", cri);
 		return "/post/detail";
+	}
+	
+	@GetMapping("/update")
+	public String update(Model model, PostVO post, PostCriteria cri) {
+		post = postService.getPost(post);
+		List<FileVO> list = postService.getFileList(post);
+		model.addAttribute("po", post);
+		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		return "/post/update";
+	}
+	@PostMapping("/update")
+	public String updatePost(Model model, PostVO post, int[] fi_nums, MultipartFile[] fileList, PostCriteria cri) {
+		if(postService.updatePost(post, fi_nums, fileList)) {
+			model.addAttribute("url", "/post/detail?po_num="+post.getPo_num()+"&"+cri);
+			model.addAttribute("msg", "게시글을 수정했습니다.");
+		}else {
+			model.addAttribute("url", "/post/detail?po_num="+post.getPo_num()+"&"+cri);
+			model.addAttribute("msg", "게시글을 수정하지 못했습니다.");
+		}
+		return "/main/message";
+	}
+	
+	@GetMapping("/delete")
+	public String delete(Model model, PostVO post, PostCriteria cri) {
+		if(postService.deletePost(post)) {
+			model.addAttribute("url", "/post/list?"+cri);
+			model.addAttribute("msg", "게시글을 삭제했습니다.");
+		}else {
+			model.addAttribute("url", "/post/detail?po_num="+post.getPo_num()+"&"+cri);
+			model.addAttribute("msg", "게시글을 삭제하지 못했습니다.");
+		}
+		return "/main/message";
 	}
 }

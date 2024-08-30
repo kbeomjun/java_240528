@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import kr.kh.spring.Pagination.PageMaker;
-import kr.kh.spring.Pagination.PostCriteria;
 import kr.kh.spring.dao.PostDAO;
 import kr.kh.spring.model.vo.CommunityVO;
 import kr.kh.spring.model.vo.FileVO;
 import kr.kh.spring.model.vo.MemberVO;
 import kr.kh.spring.model.vo.PostVO;
+import kr.kh.spring.pagination.PageMaker;
+import kr.kh.spring.pagination.PostCriteria;
 import kr.kh.spring.utils.UploadFileUtils;
 
 @Service
@@ -100,5 +100,53 @@ public class PostService {
 			return null;
 		}
 		return postDao.selectFileList(post);
+	}
+
+	public boolean updatePost(PostVO post, int[] fi_nums, MultipartFile[] fileList) {
+		if(post == null) {
+			return false;
+		}
+		
+		boolean res;
+		try {
+			res = postDao.updatePost(post);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		if(!res) {
+			return false;
+		}
+		
+		if(fi_nums != null) {
+			for(int fi_num : fi_nums) {
+				deleteFile(fi_num);
+			}
+		}
+		
+		if(fileList == null || fileList.length == 0) {
+			return true;
+		}else {
+			for(MultipartFile file : fileList) {
+				uploadFile(file, post.getPo_num());
+			}
+		}
+		return true;
+	}
+
+	private void deleteFile(int fi_num) {
+		FileVO file = postDao.selectFile(fi_num);
+		UploadFileUtils.delteFile(uploadPath, file.getFi_name());
+		postDao.deleteFile(fi_num);
+	}
+
+	public boolean deletePost(PostVO post) {
+		List<FileVO> fileList = postDao.selectFileList(post);
+		if(fileList != null) {
+			for(FileVO file : fileList) {
+				UploadFileUtils.delteFile(uploadPath, file.getFi_name());
+			}
+		}
+		return postDao.deletePost(post);
 	}
 }

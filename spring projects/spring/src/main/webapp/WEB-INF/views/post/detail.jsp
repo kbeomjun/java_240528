@@ -238,7 +238,7 @@
 			return true;
 		}
 	
-		$('.btn-insert').click(function(){
+		$(document).on('click', '.btn-insert', function(){
 			if(alertLogin()){
 				return;
 			}		

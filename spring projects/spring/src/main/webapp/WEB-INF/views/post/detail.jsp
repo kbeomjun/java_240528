@@ -93,5 +93,183 @@
 		</c:url>
 		<a href="${url}" class="btn btn-outline-danger">삭제</a>
 	</c:if>
+	
+	<hr>
+	<div class="comment-container">
+		<ul class="comment-list" style="list-style: none; padding: 0">
+			<li class="comment-item">
+				<div class="clearfix">
+					<span class="float-left" style="line-height: 38px;">아이디</span>
+					<div class="float-right">
+						<button class="btn btn-outline-warning">수정</button>
+						<button class="btn btn-outline-danger">삭제</button>
+					</div>
+				</div>
+				<div style="padding-left: 20px; line-height: 38px;">댓글내용</div>
+			</li>
+		</ul>
+		<div class="comment-pagination">
+			<ul class="pagination justify-content-center">
+			
+	 		</ul>
+		</div>
+		<div class="comment-input-box">
+			<div class="input-group mb-3">
+		    	<textarea class="form-control" id="cm_content" placeholder="댓글 입력"></textarea>
+		    	<div class="input-group-append">
+		      		<button class="btn btn-outline-success btn-insert">등록</button>
+		    	</div>
+		  	</div>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		let cri = {
+			page : 1,
+			search : '${po.po_num}'
+		}	
+
+		getCommentList2(cri);
+		function getCommentList2(cri){
+			console.log(cri);
+			$.ajax({
+				async : true, 
+				url : '<c:url value="/comment/list2"/>', 
+				type : 'post', 
+				data : JSON.stringify(cri), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					$('.comment-container').html(data);
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR)
+				}
+			});
+		}
+		
+		function getCommentList(cri){
+			$.ajax({
+				async : true,
+				url : '<c:url value="/comment/list"/>', 
+				type : 'post',
+				data : JSON.stringify(cri), 
+				contentType : "application/json; charset=utf-8",
+				dataType : "json",
+				success : function (data){
+					displayCommentList(data.list);
+					displayPagination(data.pm);
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});				
+		}
+		function displayCommentList(list){
+			if(list == null || list.length == 0){
+				$('.comment-list').html('<li class="comment-item display-4">등록된 댓글이 없습니다.</li>');
+				return;
+			}
+			
+			var str = '';
+			for(cm of list){
+				var btns = '';
+				if(cm.cm_me_id == '${user.me_id}'){
+					btns = `
+						<div class="float-right">
+							<button class="btn btn-outline-warning">수정</button>
+							<button class="btn btn-outline-danger">삭제</button>
+						</div>
+					`;
+				}
+				str += `
+					<li class="comment-item">
+						<div class="clearfix">
+							<span class="float-left" style="line-height: 38px;">\${cm.cm_me_id}</span>
+							\${btns}
+						</div>
+						<div style="padding-left: 20px; line-height: 38px;">\${cm.cm_content}</div>
+					</li>
+				`;
+			}
+			$('.comment-list').html(str);	
+		}
+		function displayPagination(pm){
+			if(pm == null || pm.endPage == 0){
+				return;
+			}
+		
+			var str = '';
+			if(pm.prev){
+				str += `
+					<li class="page-item" data-page="\${pm.startPage - 1}">
+						<a class="page-link" href="javascript:void(0);">이전</a>
+					</li>
+				`;
+			}
+			for(var i = pm.startPage; i <= pm.endPage; i++){
+				var active = pm.cri.page == i ? 'active' : '';
+				str += `
+				    <li class="page-item \${active}" data-page="\${i}">
+				    	<a class="page-link" href="javascript:void(0);">\${i}</a>
+			    	</li>
+				`;
+			}		
+			if(pm.next){
+				str += `
+				    <li class="page-item" data-page="\${pm.endPage + 1}">
+				    	<a class="page-link" href="javascript:void(0);">다음</a>
+			    	</li>
+				`;
+			}
+			$('.comment-pagination>.pagination').html(str);
+		}
+		$(document).on('click', '.comment-pagination .page-item', function(){
+			cri.page = $(this).data('page');
+			getCommentList(cri);
+		})
+
+		function alertLogin(){
+			if('${user.me_id}' != ''){
+				return false;
+			}
+			if(confirm('로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?')){
+				location.href = '<c:url value="/login"/>';
+			}
+			return true;
+		}
+	
+		$('.btn-insert').click(function(){
+			if(alertLogin()){
+				return;
+			}		
+			
+			var cm_content = $('#cm_content').val();
+			var cm_po_num = '${po.po_num}';
+			var comment = {
+				cm_content : cm_content,
+				cm_po_num : cm_po_num
+			}
+			
+			$.ajax({
+				async : true,
+				url : '<c:url value="/comment/insert"/>',
+				type : 'post',
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					if(data){
+						alert('댓글을 등록했습니다.');
+						$('#cm_content').val('');
+					}else{
+						alert('댓글을 등록하지 못했습니다.');
+					}
+					getCommentList(cri);
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		});
+	</script>
 </body>
 </html>

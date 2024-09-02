@@ -52,7 +52,6 @@ public class CommentController {
     @PostMapping("/list2")
     public String list2(Model model, @RequestBody Criteria cri){
     	cri.setPerPageNum(5);
-    	System.out.println(cri);
     	List<CommentVO> list = commentSerivce.getCommentList(cri);
     	
     	PageMaker pm = commentSerivce.getCommentPageMaker(cri);
@@ -60,5 +59,29 @@ public class CommentController {
     	model.addAttribute("list", list);
     	model.addAttribute("pm", pm);
     	return "comment/pagination";
+    }
+    
+    @ResponseBody
+    @PostMapping("/delete")
+    public boolean delete(@RequestBody CommentVO comment, HttpSession session) {
+    	MemberVO user = (MemberVO)session.getAttribute("user");
+    	return commentSerivce.deleteComment(comment, user);
+    }
+    
+    @ResponseBody
+    @PostMapping("/get")
+    public Map<String, Object> get(@RequestBody CommentVO comment, HttpSession session) {
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	MemberVO user = (MemberVO)session.getAttribute("user");
+    	CommentVO commentVO = commentSerivce.getComment(comment, user);
+    	map.put("cm", commentVO);
+    	return map;
+    }
+    
+    @ResponseBody
+    @PostMapping("/update")
+    public boolean update(@RequestBody CommentVO comment, HttpSession session) {
+    	MemberVO user = (MemberVO)session.getAttribute("user");
+    	return commentSerivce.updateComment(comment, user);
     }
 }

@@ -34,7 +34,7 @@
 		<div class="form-group">
 			<label for="date">작성일:</label>
 			<div class="form-control">
-				<fmt:formatDate value="${po.po_date}" pattern="yyyy.MM.dd"/>
+				<fmt:formatDate value="${po.po_date}" pattern="yyyy.MM.dd HH:mm:ss"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -117,7 +117,7 @@
 			<div class="input-group mb-3">
 		    	<textarea class="form-control" id="cm_content" placeholder="댓글 입력"></textarea>
 		    	<div class="input-group-append">
-		      		<button class="btn btn-outline-success btn-insert">등록</button>
+		      		<button class="btn btn-outline-success btn-insert-comment">등록</button>
 		    	</div>
 		  	</div>
 		</div>
@@ -131,7 +131,6 @@
 
 		getCommentList2(cri);
 		function getCommentList2(cri){
-			console.log(cri);
 			$.ajax({
 				async : true, 
 				url : '<c:url value="/comment/list2"/>', 
@@ -176,8 +175,8 @@
 				if(cm.cm_me_id == '${user.me_id}'){
 					btns = `
 						<div class="float-right">
-							<button class="btn btn-outline-warning">수정</button>
-							<button class="btn btn-outline-danger">삭제</button>
+							<button class="btn btn-outline-warning btn-update-comment" data-num="\${cm.cm_num}">수정</button>
+							<button class="btn btn-outline-danger btn-delete-comment" data-num="\${cm.cm_num}">삭제</button>
 						</div>
 					`;
 				}
@@ -238,7 +237,7 @@
 			return true;
 		}
 	
-		$(document).on('click', '.btn-insert', function(){
+		$(document).on('click', '.btn-insert-comment', function(){
 			if(alertLogin()){
 				return;
 			}		
@@ -262,6 +261,101 @@
 						$('#cm_content').val('');
 					}else{
 						alert('댓글을 등록하지 못했습니다.');
+					}
+					getCommentList(cri);
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		});
+		
+		$(document).on('click', '.btn-delete-comment', function(){
+			var cm_num = $(this).data("num");
+			var comment = {
+				cm_num : cm_num
+			}
+			
+			$.ajax({
+				async : true,
+				url : '<c:url value="/comment/delete"/>',
+				type : 'post',
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					if(data){
+						alert('댓글을 삭제했습니다.');
+					}else{
+						alert('댓글을 삭제하지 못했습니다.');
+					}
+					getCommentList(cri);
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		})
+		
+		$(document).on('click', '.btn-update-comment', function(){
+			var cm_num = $(this).data("num");
+			var comment = {
+				cm_num : cm_num
+			}
+			
+			$.ajax({
+				async : true,
+				url : '<c:url value="/comment/get"/>',
+				type : 'post',
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				dataType : "json", 
+				success : function (data){
+					if(data != null){
+						var cm_content = data.cm.cm_content;
+						var cm_num = data.cm.cm_num;
+						var str = `
+							<textarea class="form-control" id="cm_content" placeholder="댓글 입력">\${cm_content}</textarea>
+					    	<div class="input-group-append">
+					      		<button class="btn btn-outline-warning btn-update" data-num="\${cm_num}">수정</button>
+					    	</div>
+						`;
+						$('.input-group').children().remove();
+						$('.input-group').append(str);
+					}
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+					console.log(jqXHR);
+				}
+			});
+		});
+		
+		$(document).on('click', '.btn-update', function(){
+			var cm_content = $('#cm_content').val();
+			var cm_num = $(this).data("num");
+			var comment = {
+				cm_content : cm_content,
+				cm_num : cm_num
+			}
+			
+			$.ajax({
+				async : true,
+				url : '<c:url value="/comment/update"/>',
+				type : 'post',
+				data : JSON.stringify(comment), 
+				contentType : "application/json; charset=utf-8",
+				success : function (data){
+					if(data){
+						var str = `
+							<textarea class="form-control" id="cm_content" placeholder="댓글 입력"></textarea>
+					    	<div class="input-group-append">
+					      		<button class="btn btn-outline-success btn-insert-comment">등록</button>
+					    	</div>
+						`;
+						$('.input-group').children().remove();
+						$('.input-group').append(str);
+						alert('댓글을 수정했습니다.');
+					}else{
+						alert('댓글을 수정하지 못했습니다.');
 					}
 					getCommentList(cri);
 				}, 

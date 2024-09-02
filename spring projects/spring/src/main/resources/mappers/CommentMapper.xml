@@ -27,4 +27,22 @@
 	<select id="selectCommentTotalCount" resultType="int">
 		select count(*) from comment where cm_po_num = #{cri.search};	
 	</select>
+	
+	<select id="selectComment" resultType="CommentVO">
+		select * from comment where cm_num = #{cm.cm_num};
+	</select>
+	
+	<delete id="deleteComment">
+		delete from comment where
+		<if test="cm.cm_num == cm.cm_ori_num">
+			cm_ori_num = #{cm.cm_num};
+		</if>
+		<if test="cm.cm_num != cm.cm_ori_num">
+			cm_num = #{cm.cm_num};
+		</if>
+	</delete>
+	
+	<update id="updateComment">
+		update comment set cm_content = #{cm.cm_content} where cm_num = #{cm.cm_num};
+	</update>
 </mapper>

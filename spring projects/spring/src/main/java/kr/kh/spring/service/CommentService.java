@@ -38,4 +38,28 @@ public class CommentService {
 		int totalCount = commentDao.selectCommentTotalCount(cri);
 		return new PageMaker(2, cri, totalCount);
 	}
+
+	public boolean deleteComment(CommentVO comment, MemberVO user) {
+		CommentVO commentVO = commentDao.selectComment(comment);
+		if(!commentVO.getCm_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		return commentDao.deleteComment(commentVO);
+	}
+
+	public CommentVO getComment(CommentVO comment, MemberVO user) {
+		CommentVO commentVO = commentDao.selectComment(comment);
+		if(!commentVO.getCm_me_id().equals(user.getMe_id())) {
+			return null;
+		}
+		return commentVO;
+	}
+
+	public boolean updateComment(CommentVO comment, MemberVO user) {
+		CommentVO commentVO = commentDao.selectComment(comment);
+		if(!commentVO.getCm_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		return commentDao.updateComment(comment);
+	}
 }

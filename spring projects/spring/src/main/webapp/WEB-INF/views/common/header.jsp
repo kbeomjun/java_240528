@@ -19,12 +19,17 @@
 				</li>
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-					  커뮤니티
+						커뮤니티
 					</a>
 					<div class="dropdown-menu" id="community-list">
-						
+						<a class="dropdown-item" href="#">없음</a>
 					</div>
 				</li>
+				<c:if test="${user.me_authority == 'ADMIN'}">
+					<li class="nav-item">
+						<a class="nav-link" href="<c:url value="/admin/community"/>">커뮤니티 관리</a>
+					</li>
+				</c:if>
 			</ul>
 			<ul class="navbar-nav">
 				<c:if test="${user == null}">
@@ -43,5 +48,25 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<script type="text/javascript">
+		$.ajax({
+			async : true,
+			url : '<c:url value="/post/community/list"/>', 
+			type : 'post',
+			success : function (data){
+				var str = '';
+				for(co of data){
+					str += `
+						<a class="dropdown-item" href="<c:url value="/post/list?co_num="/>\${co.co_num}">\${co.co_name}</a>;		
+					`;
+				}
+				$('#community-list').html(str);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+				console.log(jqXHR);
+			}
+		});
+	</script>
 </body>
 </html>

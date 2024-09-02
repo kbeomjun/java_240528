@@ -9,8 +9,8 @@
 					<span class="float-left" style="line-height: 38px;">${cm.cm_me_id}</span>
 					<c:if test="${cm.cm_me_id eq user.me_id}">
 						<div class="float-right">
-							<button class="btn btn-outline-warning">수정</button>
-							<button class="btn btn-outline-danger">삭제</button>
+							<button class="btn btn-outline-warning btn-update-comment" data-num="${cm.cm_num}">수정</button>
+							<button class="btn btn-outline-danger btn-delete-comment" data-num="${cm.cm_num}">삭제</button>
 						</div>
 					</c:if>
 				</div>
@@ -45,7 +45,7 @@
 		<div class="input-group mb-3">
 	    	<textarea class="form-control" id="cm_content" placeholder="댓글 입력"></textarea>
 	    	<div class="input-group-append">
-	      		<button class="btn btn-outline-success btn-insert">등록</button>
+	      		<button class="btn btn-outline-success btn-insert-comment">등록</button>
 	    	</div>
 	  	</div>
 	</div>

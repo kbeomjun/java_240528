@@ -58,7 +58,7 @@
 				var str = '';
 				for(co of data){
 					str += `
-						<a class="dropdown-item" href="<c:url value="/post/list?co_num="/>\${co.co_num}">\${co.co_name}</a>;		
+						<a class="dropdown-item" href="<c:url value="/post/list?co_num="/>\${co.co_num}">\${co.co_name}</a>	
 					`;
 				}
 				$('#community-list').html(str);

@@ -149,4 +149,12 @@ public class PostService {
 		}
 		return postDao.deletePost(post);
 	}
+
+	public boolean insertCommunity(String name) {
+		if(name == null || name.trim().length() == 0) {
+			return false;
+		}
+		CommunityVO community = new CommunityVO(name);
+		return postDao.insertCommunity(community);
+	}
 }

@@ -33,4 +33,6 @@ public interface PostDAO {
 	boolean updatePost(@Param("po")PostVO post);
 
 	boolean deletePost(@Param("po")PostVO post);
+
+	boolean insertCommunity(@Param("co")CommunityVO community);
 }

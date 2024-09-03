@@ -8,4 +8,8 @@ public interface MemberDAO {
 	boolean insertMember(@Param("me")MemberVO member);
 
 	MemberVO selectMember(@Param("me_id")String me_id);
+
+	void updateMemberCookie(@Param("user")MemberVO user);
+
+	MemberVO selectMemberByCookie(@Param("me_cookie")String sid);
 }

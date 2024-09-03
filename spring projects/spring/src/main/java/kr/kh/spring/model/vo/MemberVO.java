@@ -1,6 +1,7 @@
 package kr.kh.spring.model.vo;
 
-import java.sql.Date;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,6 +18,7 @@ public class MemberVO {
 	int me_report; 
 	String me_ms_name; 
 	Date me_stop;
+	boolean autoLogin;
 
 	public MemberVO(String me_id, String me_pw, String me_email) {
 		this.me_id = me_id;

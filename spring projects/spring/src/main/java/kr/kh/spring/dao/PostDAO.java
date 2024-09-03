@@ -35,4 +35,8 @@ public interface PostDAO {
 	boolean deletePost(@Param("po")PostVO post);
 
 	boolean insertCommunity(@Param("co")CommunityVO community);
+
+	boolean deleteCommunity(@Param("co")CommunityVO community);
+
+	boolean updateCommunity(@Param("co")CommunityVO community);
 }

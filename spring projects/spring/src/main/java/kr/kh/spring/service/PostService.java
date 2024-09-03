@@ -157,4 +157,18 @@ public class PostService {
 		CommunityVO community = new CommunityVO(name);
 		return postDao.insertCommunity(community);
 	}
+
+	public boolean deleteCommunity(CommunityVO community) {
+		if(community == null) {
+			return false;
+		}
+		return postDao.deleteCommunity(community);
+	}
+
+	public boolean updateCommunity(CommunityVO community) {
+		if(community == null || community.getCo_name().trim().length() == 0) {
+			return false;
+		}
+		return postDao.updateCommunity(community);
+	}
 }

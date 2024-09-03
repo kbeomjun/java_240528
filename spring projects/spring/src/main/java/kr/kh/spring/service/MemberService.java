@@ -12,4 +12,6 @@ public interface MemberService {
 	void updateMemberCookie(MemberVO user);
 
 	MemberVO getMemberByCookie(String sid);
+
+	boolean findPw(String me_id);
 }

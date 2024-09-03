@@ -94,4 +94,15 @@ public class HomeController {
 		boolean res = memberService.checkId(id);
 		return res;
 	}
+	
+	@GetMapping("/find/pw")
+	public String findPw() {
+		return "/member/findPw";
+	}
+	@ResponseBody
+	@PostMapping("/find/pw")
+	public boolean findPwPost(@RequestParam String me_id) {
+		boolean res = memberService.findPw(me_id);
+		return res;
+	}
 }

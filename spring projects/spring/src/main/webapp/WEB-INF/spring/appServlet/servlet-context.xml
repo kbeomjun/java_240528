@@ -54,8 +54,30 @@
 		<beans:constructor-arg value="D:\\uploads"/>
 	</beans:bean>
 	
+	<!-- 인터셉터 등록 -->
+	<beans:bean id="adminInterceptor" class="kr.kh.spring.interceptor.AdminInterceptor"/>
+	<beans:bean id="memberInterceptor" class="kr.kh.spring.interceptor.MemberInterceptor"/>
+	<beans:bean id="guestInterceptor" class="kr.kh.spring.interceptor.GuestInterceptor"/>
+	<!-- 인터셉터 맵핑 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/post/insert"/>
+			<mapping path="/post/update"/>
+			<mapping path="/post/delete"/>
+			<beans:ref bean="memberInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/signup"/>
+			<mapping path="/login"/>
+			<beans:ref bean="guestInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
 	<context:component-scan base-package="kr.kh.spring.*" />
-	
-	
-	
 </beans:beans>

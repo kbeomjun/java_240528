@@ -47,4 +47,14 @@
     <servlet-name>CommentController</servlet-name>
     <url-pattern>/CommentController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AdminInterceptor</display-name>
+    <servlet-name>AdminInterceptor</servlet-name>
+    <servlet-class>kr.kh.spring.interceptor.AdminInterceptor</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AdminInterceptor</servlet-name>
+    <url-pattern>/AdminInterceptor</url-pattern>
+  </servlet-mapping>
 </web-app>

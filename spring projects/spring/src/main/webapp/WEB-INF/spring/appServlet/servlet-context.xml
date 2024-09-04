@@ -59,9 +59,15 @@
 	<beans:bean id="memberInterceptor" class="kr.kh.spring.interceptor.MemberInterceptor"/>
 	<beans:bean id="guestInterceptor" class="kr.kh.spring.interceptor.GuestInterceptor"/>
 	<beans:bean id="loginInterceptor" class="kr.kh.spring.interceptor.LoginInterceptor"/>
-	<beans:bean id="autologinInterceptor" class="kr.kh.spring.interceptor.AutoLoginInterceptor"/>
+	<beans:bean id="autoLoginInterceptor" class="kr.kh.spring.interceptor.AutoLoginInterceptor"/>
+	<beans:bean id="prevUrlInterceptor" class="kr.kh.spring.interceptor.PrevUrlInterceptor"/>
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
+		<interceptor>
+			<mapping path="/login"/>
+			<beans:ref bean="prevUrlInterceptor"/>
+		</interceptor>
+		
 		<interceptor>
 			<mapping path="/admin/**"/>
 			<beans:ref bean="adminInterceptor"/>
@@ -87,7 +93,7 @@
 		
 		<interceptor>
 			<mapping path="/**"/>
-			<beans:ref bean="autologinInterceptor"/>
+			<beans:ref bean="autoLoginInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

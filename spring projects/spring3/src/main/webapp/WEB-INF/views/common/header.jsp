@@ -9,21 +9,30 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	  	<a class="navbar-brand" href="#">
-	    	<img src="<c:url value="/resources/img/dog.jfif"/>" alt="logo" style="width:40px;">
-	  	</a>
-	  
-	  	<ul class="navbar-nav">
-		    <li class="nav-item">
-		      <a class="nav-link" href="#">Link 1</a>
-		    </li>
-		    <li class="nav-item">
-		      <a class="nav-link" href="#">Link 2</a>
-		    </li>
-		    <li class="nav-item">
-		      <a class="nav-link" href="#">Link 3</a>
-		    </li>
-	  	</ul>
+		<div class="container">
+		  	<ul class="navbar-nav">
+			    <li class="nav-item">
+			      	<a class="navbar-brand p-0" href="<c:url value="/"/>">
+			    		<img src="<c:url value="/resources/img/dog.jfif"/>" alt="logo" style="width:56px; height: 36px;">
+			  		</a>
+			    </li>
+			    <li class="nav-item d-flex align-items-center">
+			    	<a class="nav-link" href="#">커뮤니티</a>
+			    </li>
+			    <li class="nav-item d-flex align-items-center">
+			    	<a class="nav-link" href="#">없음</a>
+			    </li>
+		  	</ul>
+		  	
+		  	<ul class="navbar-nav">
+			    <li class="nav-item">
+			    	<a class="nav-link" href="<c:url value="/guest/signup"/>">회원가입</a>
+			    </li>
+			    <li class="nav-item">
+			    	<a class="nav-link" href="<c:url value="/guest/login"/>">로그인</a>
+			    </li>
+		  	</ul>
+	  	</div>
 	</nav>
 </body>
 </html>

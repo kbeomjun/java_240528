@@ -20,9 +20,7 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		MemberVO member = memberService.getMember("abc123");
-		log.info("/ : 메인 페이지입니다.");
-		log.info(member);
-		return "home";
+		model.addAttribute("title", "메인");
+		return "/main/home";
 	}
 }

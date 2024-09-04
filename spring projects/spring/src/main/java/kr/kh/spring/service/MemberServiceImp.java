@@ -84,7 +84,7 @@ public class MemberServiceImp implements MemberService {
 		// 성공하면 DB에 새 비밀번호를 암호화해서 수정
 		String encPw = passwordEncoder.encode(newPw);
 		user.setMe_pw(encPw);
-		return memberDao.updateMemberPw(user);
+		return memberDao.updateMember(user);
 	}
 
 	private String randomPassword(int size) {
@@ -126,5 +126,22 @@ public class MemberServiceImp implements MemberService {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public boolean updateMember(MemberVO user, MemberVO member) {
+		if(user == null || member == null) {
+			return false;
+		}
+		member.setMe_id(user.getMe_id());
+		if(member.getMe_pw().length() == 0) {
+			// 비번을 안바꾸는 경우
+			member.setMe_pw(user.getMe_pw());
+		}else {
+			// 비번을 바꾸는 경우
+			String encPw = passwordEncoder.encode(member.getMe_pw());
+			member.setMe_pw(encPw);
+		}
+		return memberDao.updateMember(member);
 	}
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.spring3.dao.PostDAO">
+	<select id="selectCommunityList" resultType="kr.kh.spring3.model.vo.CommunityVO">
+		select * from community order by co_num;
+	</select>
+	
+	<select id="selectPostList" resultType="kr.kh.spring3.model.vo.PostVO">
+		select * from post 
+		where
+			<if test="cri.co_num != 0">
+			po_co_num = #{cri.co_num} and
+			</if>
+			<choose>
+				<when test="cri.type == 'title'">
+					po_title like concat('%', #{cri.search}, '%')
+				</when>
+				<when test="cri.type == 'id'">
+					po_me_id = #{cri.search}
+				</when>
+				<otherwise>
+					(po_title like concat('%',#{cri.search}, '%') or po_me_id = #{cri.search})
+				</otherwise>
+			</choose>
+		order by po_num desc limit #{cri.pageStart}, #{cri.perPageNum};
+	</select>
+	
+	<select id="selectPostTotalCount" resultType="int">
+		select count(*) from post 
+		<if test="cri.co_num > 0">
+		where po_co_num = #{cri.co_num}
+		</if>
+	</select>
+</mapper>

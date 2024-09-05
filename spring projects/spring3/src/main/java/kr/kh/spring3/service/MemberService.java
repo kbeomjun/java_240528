@@ -22,4 +22,18 @@ public class MemberService {
 		member.setMe_pw(encPw);
 		return memberDao.insertMember(member);
 	}
+
+	public MemberVO login(MemberVO member) {
+		if(member == null) {
+			return null;
+		}
+		MemberVO memberVO = memberDao.selectMember(member);
+		if(memberVO == null) {
+			return null;
+		}
+		if(!passwordEncoder.matches(member.getMe_pw(), memberVO.getMe_pw())) {
+			memberVO.setMe_pw("1");
+		}
+		return memberVO;
+	}
 }

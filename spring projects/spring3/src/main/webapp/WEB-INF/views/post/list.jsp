@@ -21,8 +21,8 @@
 		</c:forEach>
 	</div>
 	
-	<div>
-		<table class="table table-hover mt-3">
+	<div class="mb-3" style="min-height: 277px;">
+		<table class="table table-hover">
 	    	<thead>
 	      		<tr>
 	        		<th>번호</th>
@@ -38,7 +38,7 @@
 			      	<tr>
 				        <td>${po.po_num}</td>
 				        <td>
-				        	<a href="#">${po.po_title}</a>
+				        	<a href="<c:url value="/post/detail/${po.po_num}"/>">${po.po_title}</a>
 				        </td>
 				        <td>
 				        	<c:url var="url" value="/post/list/${pm.cri.co_num}">
@@ -117,6 +117,10 @@
 	    	<button class="btn btn-outline-info">검색</button>
 	    </div>
  	</form>
+ 	
+ 	<c:if test="${pm.cri.co_num ne 0 && user.me_id ne null}">
+	 	<a href="<c:url value="/post/insert/${pm.cri.co_num}"/>" class="btn btn-outline-success">글쓰기</a>
+ 	</c:if>
  	
  	<script type="text/javascript">
  		$('.btn-community').click(function(e){

@@ -18,4 +18,8 @@ public class PostVO {
 	private int po_report;
 	private int po_up;
 	private int po_down;
+	
+	public PostVO(int po_num) {
+		this.po_num = po_num;
+	}
 }

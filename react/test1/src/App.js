@@ -1,11 +1,11 @@
-import Ul from "./Ul";
+import Test1 from "./test1/Test1";
 
 function App() {
 
   return (
     <div>
-      오늘의 할일
-      <Ul />
+      {/* <Test1 /> */}
+      
     </div>
   );
 }

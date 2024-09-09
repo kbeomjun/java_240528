@@ -15,7 +15,7 @@ function Ul(){
 				})
 			}
 			{
-				listTitle.map(list)
+				// listTitle.map(list)
 			}
 		</ul>
 	);

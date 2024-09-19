@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Form } from 'react-bootstrap';
+import { Form, Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function PostDetail(){
@@ -16,9 +16,9 @@ function PostDetail(){
 			})
 			.catch(e=>console.error(e));
 	}, [po_num]);
-	
+
 	return(
-		<div>
+		<Container>
 			<Form.Group className="mb-3">
         <Form.Label>제목</Form.Label>
         <Form.Control readOnly value={post.po_title}/>
@@ -37,9 +37,11 @@ function PostDetail(){
       </Form.Group>
 			<Form.Group className="mb-3">
         <Form.Label>내용</Form.Label>
-        <Form.Control as="textarea" rows={12} readOnly value={post.po_content}/>
+        <div className="form-control" style={{ height: 'auto', overflow: 'auto', border: '1px solid #ced4da', borderRadius: '0.25rem', padding: '0.5rem' }}>
+					<div dangerouslySetInnerHTML={{ __html: post.po_content }} />
+				</div>
       </Form.Group>
-		</div>
+		</Container>
 	)
 }
 

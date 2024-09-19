@@ -9,7 +9,7 @@ function App() {
         <Nav />
       
         <Routes>
-        <Route path={'/'} exact element={<Main/>}/>
+          <Route path={'/'} exact element={<Main/>}/>
           <Route path={'/post/list/:co_num'} element={<PostList/>}/>
         </Routes>
       </BrowserRouter>

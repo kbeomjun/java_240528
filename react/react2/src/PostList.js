@@ -18,7 +18,7 @@ function PostList(){
 				setList(tmp);
 				setPm(res.pm);
 			})
-		}, []);
+	}, []);
 	return(
 		<div>
 			<table border={1}>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 function PostList(){
 	let [list, setList] = useState([]);
@@ -10,15 +10,15 @@ function PostList(){
 		fetch('/spring/react/post/list/'+co_num)
 			.then((res) => res.json())
 			.then(res=>{
-					var tmp = res.list.map(item=>{
-						var date = (new Date(item.po_date)).toLocaleDateString();
-						item = {...item, date};
-						return item;
-					})
+				var tmp = res.list.map(item=>{
+					var date = (new Date(item.po_date)).toLocaleDateString();
+					item = {...item, date};
+					return item;
+				})
 				setList(tmp);
 				setPm(res.pm);
 			})
-	}, []);
+	}, [co_num]);
 	return(
 		<div>
 			<table border={1}>
@@ -35,9 +35,11 @@ function PostList(){
 					{
 						list.map((item)=>{
 							return(
-								<tr>
+								<tr key={item.po_num}>
 									<td>{item.po_num}</td>
-									<td>{item.po_title}</td>
+									<td>
+										<Link to={"/post/detail/"+item.po_num}>{item.po_title}</Link>
+									</td>
 									<td>{item.po_me_id}</td>
 									<td>{item.date}</td>
 									<td>{item.po_view}</td>

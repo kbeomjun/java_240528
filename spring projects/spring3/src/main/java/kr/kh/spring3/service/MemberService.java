@@ -20,7 +20,11 @@ public class MemberService {
 		}
 		String encPw = passwordEncoder.encode(member.getMe_pw());
 		member.setMe_pw(encPw);
-		return memberDao.insertMember(member);
+		try {
+			return memberDao.insertMember(member);
+		}catch (Exception e) {
+			return false;
+		}
 	}
 
 	public MemberVO login(MemberVO member) {

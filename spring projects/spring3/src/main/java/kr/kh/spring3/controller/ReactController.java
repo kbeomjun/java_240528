@@ -45,6 +45,15 @@ public class ReactController {
 		return map;
 	}
 	
+	@GetMapping("/post/detail/{po_num}")
+	public Object detail(@PathVariable("po_num")int po_num) {
+		PostVO post = new PostVO(po_num);
+		postService.updatePostView(post);
+		PostVO postVo = postService.getPost(post);
+		return postVo;
+	}
+	
+	// react1이랑 연동, 데이터 주고 받기
 	@GetMapping("/get/str")
 	public String getStr() {
 		return "Hi";

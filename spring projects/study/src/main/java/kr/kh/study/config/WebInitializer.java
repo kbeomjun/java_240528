@@ -20,7 +20,6 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected String[] getServletMappings() {
         return new String[] { "/" }; // DispatcherServlet의 매핑 경로
     }
-    
 
 	// 필터 설정 추가
 	@Override

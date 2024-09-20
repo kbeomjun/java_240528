@@ -35,6 +35,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/post/**")  // 모든 경로에 대해 인터셉터 적용
                 .excludePathPatterns("/post/list", "/post/detail"); //제외할 경로  // 특정 경로 제외
     }
-    
-	
 }

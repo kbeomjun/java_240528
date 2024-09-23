@@ -20,7 +20,7 @@
 </head>
 <body>
 	<h1>마이페이지</h1>
-	<form action="<c:url value="/signup"/>" method="post" id="form">
+	<form action="<c:url value="/mypage"/>" method="post" id="form">
 		<div class="form-group">
 			<label for="id">아이디:</label>
 			<input type="text" class="form-control" id="id" name="me_id" value="${user.me_id}" readonly>

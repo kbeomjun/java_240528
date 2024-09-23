@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -124,10 +123,11 @@ public class HomeController {
 		boolean res = memberService.updateMember(user, member);
 		if(res) {
 			model.addAttribute("msg", "회원정보를 수정했습니다.");
+			model.addAttribute("url", "/logout");
 		}else {
 			model.addAttribute("msg", "회원정보를 수정하지 못했습니다.");	
+			model.addAttribute("url", "/mypage");
 		}
-		model.addAttribute("url", "/mypage");
 		return "/main/message";
 	}
 }

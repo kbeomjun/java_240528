@@ -51,7 +51,12 @@
 		</div>
 		<div class="form-group">
 			<label for="content">내용:</label>
-			<div class="form-control" style="min-height: 400px; overflow: scroll;">${po.po_content}</div>
+			<div class="form-control" style="min-height: 400px; overflow: scroll;">
+				${po.po_content}
+				<c:forEach items="${list}" var="fi">
+					<img src="<c:url value="/uploads${fi.fi_name}"/>">
+				</c:forEach>
+			</div>
 		</div>
 		<div class="form-group">
 			<label for="content">첨부파일:</label>

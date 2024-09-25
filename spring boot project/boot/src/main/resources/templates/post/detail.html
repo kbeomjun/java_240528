@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org" 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+	layout:decorate="~{layout/layout.html}">
+<head>
+	<meta charset="UTF-8">
+	<title>게시글 조회</title>
+</head>
+<body>
+	<main layout:fragment="content">
+		<h1>게시글 조회</h1>
+		<div class="form-group">
+			<label for="title">제목:</label>
+			<div class="form-control" th:text="${po.po_title}"></div>
+		</div>
+		<div class="form-group">
+			<label for="writer">작성자:</label>
+			<div class="form-control" th:text="${po.po_me_id}"></div>
+		</div>
+		<div class="form-group">
+			<label for="date">작성일:</label>
+			<div class="form-control" th:text="${#dates.format(po.po_date, 'yyyy.MM.dd hh:mm:ss')}"></div>
+		</div>
+		<div class="form-group">
+			<label for="view">조회수:</label>
+			<div class="form-control" th:text="${po.po_view}"></div>
+		</div>
+		<div class="form-group">
+			<label for="content">내용:</label>
+			<div class="form-control" style="min-height: 400px; overflow-y: auto;" th:utext="${po.po_content}"></div>
+		</div>
+		<a th:href="@{/post/list/{co_num}(co_num=${po.po_co_num})}" class="btn btn-outline-primary">목록</a>
+		<hr>
+	</main>
+</body>
+</html>

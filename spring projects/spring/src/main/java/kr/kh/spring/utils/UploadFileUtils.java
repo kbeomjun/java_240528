@@ -11,24 +11,28 @@ public class UploadFileUtils {
     public static String uploadFile(String uploadPath, String originalName, byte[] fileData) throws Exception{
         UUID uid = UUID.randomUUID();
         String savedName = uid.toString() +"_" + originalName;
-        String savedPath = calcPath(uploadPath);
+        String savedPath = calcPath(uploadPath, originalName);
         File target = new File(uploadPath + savedPath, savedName);
         FileCopyUtils.copy(fileData, target);
         String uploadFileName = getFileName(savedPath, savedName);
         return uploadFileName;
     }
 
-    private static String calcPath(String uploadPath) {
+    private static String calcPath(String uploadPath, String originalName) {
         Calendar cal = Calendar.getInstance();
-
+        /*
         String yearPath = File.separator+cal.get(Calendar.YEAR);
         String monthPath = yearPath + File.separator
             + new DecimalFormat("00").format(cal.get(Calendar.MONTH)+1);
         String datePath = monthPath + File.separator
             + new DecimalFormat("00").format(cal.get(Calendar.DATE));
         makeDir(uploadPath, yearPath, monthPath, datePath);
-
+        
         return datePath;
+        */
+        String path = File.separator+originalName.substring(0, 3);
+        makeDir(uploadPath, path);
+        return path;
     }
     
     private static void makeDir(String uploadPath, String... paths) {

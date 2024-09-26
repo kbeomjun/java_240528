@@ -12,47 +12,51 @@
 		<h1>게시글 목록</h1>
 		<div class="mb-3">
 			<a th:each="co : ${coList}" class="btn btn-outline-info" style="margin-right: 5px;"
-				th:href="@{/post/list/{co_num}(co_num=${co.co_num})}" th:text="${co.co_name}">
+				th:href="@{/post/list/{co_num}(co_num=${co.co_num})}" th:text="${co.co_name}"
+				th:classappend="${co.co_num} == ${pm.cri.co_num} ? 'active' : ''">
 			</a>
 		</div>
-		<table class="table table-hover">
-	    	<thead>
-	      		<tr>
-	        		<th>번호</th>
-	        		<th>제목</th>
-	        		<th>작성자</th>
-	        		<th>작성일</th>
-	        		<th>조회수</th>
-	      		</tr>
-	    	</thead>
-		    <tbody>
-		      	<tr th:each="po, stat : ${poList}">
-			        <td th:text="${stat.count}"></td>
-			        <td>
-			        	<a th:href="@{/post/detail/{po_num}(po_num=${po.po_num})}" th:text="${po.po_title}"></a>
-			        </td>
-			        <td th:text="${po.po_me_id}"></td>
-			        <td th:text="${#dates.format(po.po_date, 'yyyy.MM.dd hh:mm:ss')}"></td>
-			        <td th:text="${po.po_view}"></td>
-		      	</tr>
-		      	<tr th:if="${poList.size() == 0}">
-		      		<th class="text-center" colspan="5">등록된 게시글이 없습니다.</th>
-		      	</tr>
-			</tbody>
-		</table>
-		<ul class="pagination justify-content-center" th:object="${pm}" th:if="${pm.endPage != 0}">
-	  		<li class="page-item" th:classappend="*{prev} ? '' : 'disabled'">
-	  			<a class="page-link" th:href="@{/post/list/{co_num}(page=*{startPage - 1}, co_num=*{cri.co_num})}">이전</a>
-  			</li>
-		    <li class="page-item" 
-		    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
-		    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
-		    	<a class="page-link" th:href="@{/post/list/{co_num}(page=${i}, co_num=*{cri.co_num})}" th:text="${i}"></a>
-	    	</li>
-		    <li class="page-item" th:classappend="*{next} ? '' : 'disabled'">
-		    	<a class="page-link" th:href="@{/post/list/{co_num}(page=*{endPage + 1}, co_num=*{cri.co_num})}">다음</a>
-	    	</li>
-		</ul>
+		<div th:if="${co_num != 0}">
+			<table class="table table-hover">
+		    	<thead>
+		      		<tr>
+		        		<th>번호</th>
+		        		<th>제목</th>
+		        		<th>작성자</th>
+		        		<th>작성일</th>
+		        		<th>조회수</th>
+		      		</tr>
+		    	</thead>
+			    <tbody>
+			      	<tr th:each="po, stat : ${poList}">
+				        <td th:text="${stat.count}"></td>
+				        <td>
+				        	<a th:href="@{/post/detail/{po_num}(po_num=${po.po_num})}" th:text="${po.po_title}"></a>
+				        </td>
+				        <td th:text="${po.po_me_id}"></td>
+				        <td th:text="${#dates.format(po.po_date, 'yyyy.MM.dd hh:mm:ss')}"></td>
+				        <td th:text="${po.po_view}"></td>
+			      	</tr>
+			      	<tr th:if="${poList.size() == 0}">
+			      		<th class="text-center" colspan="5">등록된 게시글이 없습니다.</th>
+			      	</tr>
+				</tbody>
+			</table>
+			<ul class="pagination justify-content-center" th:object="${pm}" th:if="${pm.endPage != 0}">
+		  		<li class="page-item" th:classappend="*{prev} ? '' : 'disabled'">
+		  			<a class="page-link" th:href="@{/post/list/{co_num}(page=*{startPage - 1}, co_num=*{cri.co_num})}">이전</a>
+	  			</li>
+			    <li class="page-item" 
+			    	th:each="i : *{#numbers.sequence(startPage, endPage)}"
+			    	th:classappend="*{cri.page} == ${i} ? 'active' : ''">
+			    	<a class="page-link" th:href="@{/post/list/{co_num}(page=${i}, co_num=*{cri.co_num})}" th:text="${i}"></a>
+		    	</li>
+			    <li class="page-item" th:classappend="*{next} ? '' : 'disabled'">
+			    	<a class="page-link" th:href="@{/post/list/{co_num}(page=*{endPage + 1}, co_num=*{cri.co_num})}">다음</a>
+		    	</li>
+			</ul>
+			<a class="btn btn-outline-success" th:href="@{/post/insert/{co_num}(co_num=${pm.cri.co_num})}">등록</a>
+		</div>
 	</main>
 </body>
 </html>

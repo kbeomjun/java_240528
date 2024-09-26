@@ -19,4 +19,6 @@ public interface PostDAO {
 	void updatePostView(@Param("po")PostVO post);
 
 	PostVO selectPost(@Param("po")PostVO post);
+
+	boolean insertPost(@Param("po")PostVO post);
 }

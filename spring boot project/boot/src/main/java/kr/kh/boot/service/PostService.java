@@ -38,4 +38,8 @@ public class PostService {
 	public PostVO getPost(PostVO post) {
 		return postDao.selectPost(post);
 	}
+
+	public boolean insertPost(PostVO post) {
+		return postDao.insertPost(post);
+	}
 }

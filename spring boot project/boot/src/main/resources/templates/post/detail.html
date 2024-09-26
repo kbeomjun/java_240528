@@ -31,6 +31,8 @@
 			<div class="form-control" style="min-height: 400px;  height: auto;" th:utext="${po.po_content}"></div>
 		</div>
 		<a th:href="@{/post/list/{co_num}(co_num=${po.po_co_num})}" class="btn btn-outline-primary">목록</a>
+		<a th:href="@{/post/update/{po_num}(po_num=${po.po_num})}" class="btn btn-outline-warning">수정</a>
+		<a th:href="@{/post/delete/{po_num}(po_num=${po.po_num})}" class="btn btn-outline-danger">삭제</a>
 		<hr>
 	</main>
 </body>

@@ -37,7 +37,6 @@ public class PostController {
 	
 	@GetMapping("/post/detail/{po_num}")
 	public String postDetail(Model model, @PathVariable int po_num, PostVO post) {
-		post.setPo_num(po_num);
 		postService.updatePostView(post);
 		PostVO postVO = postService.getPost(post);
 		model.addAttribute("po", postVO);
@@ -49,12 +48,39 @@ public class PostController {
 		return "post/insert";
 	}
 	@PostMapping("/post/insert")
-	public String postInsertPost(Model model, PostVO post) {
+	public String postInsertPost(PostVO post) {
 		boolean res = postService.insertPost(post);
 		if(res) {
 			return "redirect:/post/list/"+post.getPo_co_num();
 		}else {
 			return "redirect:/post/insert/"+post.getPo_co_num();
+		}
+	}
+	
+	@GetMapping("/post/update/{po_num}")
+	public String postUpdate(Model model, @PathVariable int po_num, PostVO post) {
+		PostVO postVO = postService.getPost(post);
+		model.addAttribute("po", postVO);
+		return "post/update";
+	}
+	@PostMapping("/post/update")
+	public String postUpdatePost(PostVO post) {
+		boolean res = postService.updatePost(post);
+		if(res) {
+			return "redirect:/post/detail/"+post.getPo_num();
+		}else {
+			return "redirect:/post/update/"+post.getPo_num();
+		}
+	}
+	
+	@GetMapping("/post/delete/{po_num}")
+	public String postDelete(@PathVariable int po_num, PostVO post) {
+		PostVO postVO = postService.getPost(post);
+		boolean res = postService.deletePost(postVO);
+		if(res) {
+			return "redirect:/post/list/"+postVO.getPo_co_num();
+		}else {
+			return "redirect:/post/detail/"+postVO.getPo_num();
 		}
 	}
 }

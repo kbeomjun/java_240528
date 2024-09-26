@@ -42,4 +42,12 @@ public class PostService {
 	public boolean insertPost(PostVO post) {
 		return postDao.insertPost(post);
 	}
+
+	public boolean updatePost(PostVO post) {
+		return postDao.updatePost(post);
+	}
+
+	public boolean deletePost(PostVO post) {
+		return postDao.deletePost(post);
+	}
 }

@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -19,33 +20,38 @@ public class DataController {
 		return "/data/sample";
 	}
 	
+	
 	@ResponseBody
-	@PostMapping(value="/data/sample", produces="application/text; charset=UTF-8;")
-	public String dataSamplePost() throws Exception {
-		StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"); /*URL*/
-        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=인코드된서비스키"); /*Service Key*/
-        urlBuilder.append("&" + URLEncoder.encode("sidoName","UTF-8") + "=" + URLEncoder.encode("서울", "UTF-8")); 
-        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("값", "UTF-8")); 
+    @PostMapping(value="/data/sample", produces="application/json; charset=UTF-8;")
+    public String dataSamplePost(@RequestParam String location) throws Exception {
+		String serviceKey = "pBhWBUkw5%2F4x7t6DQ1COIPpC4HQE%2FZQ7lM17jognwIbseXGONSy4EXK6O81K%2B%2Brce5XANzJELnFUFk240rMxoQ%3D%3D";
+       
+//		String url = "https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty"; 
+//        url += "?serviceKey=" + URLEncoder.encode(serviceKey, "UTF-8");
+//        url += "&returnType=" + URLEncoder.encode("json", "UTF-8");
+//        url += "&sidoName=" + URLEncoder.encode(location, "UTF-8");
+        
+        StringBuilder urlBuilder = new StringBuilder("https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty");
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey);
+        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
+        urlBuilder.append("&" + URLEncoder.encode("sidoName","UTF-8") + "=" + URLEncoder.encode(location, "UTF-8"));
 
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
+        URL requestUrl = new URL(urlBuilder.toString());
+        HttpURLConnection urlConnection = (HttpURLConnection) requestUrl.openConnection();
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + urlConnection.getResponseCode());
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+        
+        StringBuilder responseText = new StringBuilder();
         String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
+        while ((line = br.readLine()) != null) {
+            responseText.append(line);
         }
-        rd.close();
-        conn.disconnect();
-        System.out.println(sb.toString());
-		return sb.toString();
-	}
+        br.close();
+        urlConnection.disconnect();
+        
+        return responseText.toString(); // JSON 형태로 반환
+    }
 }
